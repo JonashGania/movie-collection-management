@@ -4,7 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Root from './route/root'
 import HomePage from './pages/HomePage'
-import MoviesPage from './pages/MoviesPage'
+import MoviesPage from './pages/movies/MoviesPage'
+import GenresPage from './pages/genres/GenresPage'
 import './styles/index.css'
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/movies',
         element: <MoviesPage />
+      },
+      {
+        path: '/genres',
+        element: <GenresPage />
       }
     ]
   }
