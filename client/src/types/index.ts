@@ -4,9 +4,10 @@ export interface Movies {
     release_date: string,
     rating: string,
     slug: string,
+    poster_url: string | null
 }
 
 export interface MoviesPaginated {
     page: number,
-    allMovies: Movies[]
+    movies: Movies[]
 }
