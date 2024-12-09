@@ -11,3 +11,8 @@ export interface MoviesPaginated {
     page: number,
     movies: Movies[]
 }
+
+export interface Genres {
+    id: number,
+    name: string,
+}

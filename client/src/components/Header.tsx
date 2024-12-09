@@ -20,9 +20,15 @@ const Header = () => {
         <header className="w-full">
             <nav className="max-w-7xl h-[100px] mx-auto px-4 flex items-center justify-between">
                 <h1 className="text-cyan-300 text-xl font-semibold">Movie Collection</h1>
-                <ul className="flex items-center gap-4 text-zinc-200 text-lg font-medium">
-                    {links.map((item) => (
-                        <Link to={item.link}>{item.name}</Link>
+                <ul className="flex items-center gap-8 text-zinc-200 text-lg font-medium">
+                    {links.map((item, index) => (
+                        <Link 
+                            to={item.link} 
+                            key={index} 
+                            className="text-white text-lg"
+                        >
+                            {item.name}
+                        </Link>
                     ))}
                 </ul>
             </nav>

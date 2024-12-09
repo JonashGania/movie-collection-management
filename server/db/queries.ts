@@ -50,6 +50,34 @@ export const getMoviePoster = async (movieId: number, title: string) => {
 }
 
 export const getGenres = async() => {
-    const { rows } = await pool.query("SELECT id, name FROM genres ORDER BY name ASC");
-    return rows
+    try {
+        const { rows } = await pool.query("SELECT id, name FROM genres ORDER BY name ASC");
+        return rows
+    } catch (error) {
+        console.error('Error fetching genres', error);
+        return [];
+    }
 };
+
+export const queryMoviesByGenre = async(genre: string, page: number) => {
+    const limit = 30;
+    const offset = (page - 1) * limit;
+
+    try {
+        const { rows } = await pool.query(`
+            SELECT m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url
+            FROM movies m
+            JOIN movie_genres mg ON m.id = mg.movie_id
+            JOIN genres g ON mg.genre_id = g.id
+            LEFT JOIN movie_images mi ON m.id = mi.movie_id
+            WHERE LOWER(g.name) = LOWER($1)
+            LIMIT $2 OFFSET $3`,
+            [genre, limit, offset]
+        );
+
+        return rows;
+    } catch (error) {
+        console.error('Error fetching movies by genre with posters', error);
+        return [];
+    }
+}

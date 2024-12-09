@@ -10,7 +10,7 @@ const MovieWrapper = ({ movies }: MovieWrapperProps) => {
         <div className="pt-8">
             <div className="movie-wrapper w-full">
                 {movies.movies.map((movie) => (
-                    <div key={movie.id} className="rounded-md bg-[#1f2833] flex flex-col pb-4">
+                    <div key={movie.id} className="rounded-md bg-[#1f2833] flex flex-col pb-4 max-w-[235px] md:max-w-full w-full">
                         <div className="relative w-full">
                             {movie.poster_url ? (
                                 <div className="movie-image">
