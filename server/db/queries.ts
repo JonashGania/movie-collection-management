@@ -51,7 +51,7 @@ export const getMoviePoster = async (movieId: number, title: string) => {
 
 export const getGenres = async() => {
     try {
-        const { rows } = await pool.query("SELECT id, name FROM genres ORDER BY name ASC");
+        const { rows } = await pool.query("SELECT id, name, slug FROM genres ORDER BY name ASC");
         return rows
     } catch (error) {
         console.error('Error fetching genres', error);
@@ -59,20 +59,23 @@ export const getGenres = async() => {
     }
 };
 
-export const queryMoviesByGenre = async(genre: string, page: number) => {
+export const queryMoviesByGenre = async(slug: string, page: number) => {
     const limit = 30;
     const offset = (page - 1) * limit;
 
     try {
         const { rows } = await pool.query(`
-            SELECT m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url
-            FROM movies m
-            JOIN movie_genres mg ON m.id = mg.movie_id
-            JOIN genres g ON mg.genre_id = g.id
+            SELECT 
+                g.name AS genre_name,
+                m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url, 
+                COUNT(*) OVER() AS total_count
+            FROM genres g
+            LEFT JOIN movie_genres mg ON g.id = mg.genre_id
+            LEFT JOIN movies m ON mg.movie_id = m.id
             LEFT JOIN movie_images mi ON m.id = mi.movie_id
-            WHERE LOWER(g.name) = LOWER($1)
+            WHERE g.slug = $1
             LIMIT $2 OFFSET $3`,
-            [genre, limit, offset]
+            [slug, limit, offset]
         );
 
         return rows;

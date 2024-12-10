@@ -6,6 +6,7 @@ import Root from './route/root'
 import HomePage from './pages/HomePage'
 import MoviesPage from './pages/movies/MoviesPage'
 import GenresPage from './pages/genres/GenresPage'
+import GenreMoviesPage from './pages/moviesByGenres/GenreMoviesPage'
 import './styles/index.css'
 
 const router = createBrowserRouter([
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/genres',
-        element: <GenresPage />
+        element: <GenresPage />,
+      },
+      {
+        path: '/genres/:genreId',
+        element: <GenreMoviesPage />
       }
     ]
   }

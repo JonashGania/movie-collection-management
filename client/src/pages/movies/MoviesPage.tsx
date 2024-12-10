@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { getAllMovies } from "../../api";
-import MovieWrapper from "./MovieWrapper";
+import MovieWrapper from "../../components/MovieWrapper";
 
 const MoviesPage = () => {
     const [page, setPage] = useState(1);

@@ -15,4 +15,11 @@ export interface MoviesPaginated {
 export interface Genres {
     id: number,
     name: string,
+    slug: string,
+}
+
+export interface GenreMovies {
+    totalPages: number,
+    genre: string,
+    movies: Movies[]
 }
