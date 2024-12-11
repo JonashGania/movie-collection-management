@@ -12,10 +12,6 @@ const GenreMoviesPage = () => {
         enabled: !!genreId
     })
 
-    if (!data) {
-        return <div>No movies found on this genre</div>
-    }
-
     console.log(data)
 
     return (
@@ -25,8 +21,8 @@ const GenreMoviesPage = () => {
                     <div className="w-[5px] h-8 bg-cyan-300 rounded-lg"></div>
                     <h1 className="font-bold text-2xl pl-2 text-white">Popular movies</h1>
                 </div>
-                <h4 className="text-zinc-400 pt-2 font-medium text-lg">Trending in {data.genre} movies</h4>
-                {data.movies.length === 0 ? (
+                <h4 className="text-zinc-400 pt-2 font-medium text-lg">Trending in {data?.genre} movies</h4>
+                {!data ? (
                     <p>No movies available in this genre</p>
                 ) :  (
                     <MovieWrapper movies={data}/>

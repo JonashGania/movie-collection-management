@@ -11,14 +11,17 @@ export const getMoviesPaginated = async(page: number) => {
 
     try {
         const { rows } = await pool.query(`
-            SELECT m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url 
+            SELECT 
+                m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url,
+                COUNT(*) OVER() AS total_count
             FROM movies m
             LEFT JOIN movie_images mi
             ON m.id = mi.movie_id
             LIMIT $1 OFFSET $2`,
             [limit, offset]
         );
-        return rows
+        
+        return rows.length > 0 ? rows : [];
     } catch (error) {
         console.error('Error fetching paginated movies', error);
         return [];
@@ -67,18 +70,18 @@ export const queryMoviesByGenre = async(slug: string, page: number) => {
         const { rows } = await pool.query(`
             SELECT 
                 g.name AS genre_name,
-                m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url, 
+                m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url,
                 COUNT(*) OVER() AS total_count
             FROM genres g
             LEFT JOIN movie_genres mg ON g.id = mg.genre_id
             LEFT JOIN movies m ON mg.movie_id = m.id
             LEFT JOIN movie_images mi ON m.id = mi.movie_id
-            WHERE g.slug = $1
+            WHERE g.slug = $1 AND m.id IS NOT NULL
             LIMIT $2 OFFSET $3`,
             [slug, limit, offset]
         );
 
-        return rows;
+        return rows.length > 0 ? rows : [];
     } catch (error) {
         console.error('Error fetching movies by genre with posters', error);
         return [];

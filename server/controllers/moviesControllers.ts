@@ -17,8 +17,12 @@ export const getAllMoviesPaginated = async(req: Request, res: Response) => {
             return;
         }
 
+        const totalMovies = movies[0]?.total_count || 0;
+        const totalPages = Math.ceil(totalMovies / 30);
+        const mapMovies = movies.map(({ total_count, ...movie}) => movie);
+
         const allMovies = await Promise.all(
-            movies.map(async (movie) => {
+            mapMovies.map(async (movie) => {
                 try {
                     const posterUrl = await getMoviePoster(movie.id, movie.title);
                     return {...movie, poster_url: posterUrl };
@@ -30,7 +34,7 @@ export const getAllMoviesPaginated = async(req: Request, res: Response) => {
             })
         )
 
-        res.status(200).json({page, movies: allMovies});
+        res.status(200).json({totalPages, movies: allMovies});
     } catch (error) {
         console.error('Error in getAllMoviesPaginated controller', error);
         res.status(500).json({ error: "An error occured while fetching movies." });

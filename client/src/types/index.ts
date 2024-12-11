@@ -8,7 +8,7 @@ export interface Movies {
 }
 
 export interface MoviesPaginated {
-    page: number,
+    totalPages: number,
     movies: Movies[]
 }
 

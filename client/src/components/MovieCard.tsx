@@ -7,7 +7,7 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie }: MovieCardProps) => {
     return (
-        <div key={movie.id} className="rounded-md bg-[#1f2833] flex flex-col pb-4 max-w-[235px] w-full">
+        <div key={movie.id} className="movie-card rounded-md bg-[#1f2833] flex flex-col pb-4 max-w-[235px] w-full">
             <div className="relative w-full">
                 {movie.poster_url ? (
                     <div className="movie-image">
