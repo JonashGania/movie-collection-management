@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { getMoviesPaginated, getMoviePoster } from "../db/queries.js"
+import { getMoviesPaginated, getMoviePoster } from "../db/getQueries.js"
 
 export const getAllMoviesPaginated = async(req: Request, res: Response) => {
     const page = parseInt(req.query.page as string, 10) || 1;

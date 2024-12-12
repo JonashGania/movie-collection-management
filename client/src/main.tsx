@@ -3,10 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Root from './route/root'
-import HomePage from './pages/HomePage'
+import HomePage from './pages/home/HomePage'
 import MoviesPage from './pages/movies/MoviesPage'
 import GenresPage from './pages/genres/GenresPage'
 import GenreMoviesPage from './pages/moviesByGenres/GenreMoviesPage'
+import AddMoviePage from './pages/addMovie/AddMoviePage'
 import './styles/index.css'
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         element: <GenreMoviesPage />
       }
     ]
+  },
+  {
+    path: '/add-movie',
+    element: <AddMoviePage />
   }
 ])
 

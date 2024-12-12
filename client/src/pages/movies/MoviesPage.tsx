@@ -3,6 +3,7 @@ import { useState } from "react"
 import { getAllMovies } from "../../api";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 import MovieWrapper from "../../components/MovieWrapper";
 import PaginationComponent from "@/components/PaginationComponent";
 
@@ -26,8 +27,6 @@ const MoviesPage = () => {
         )
     }
 
-    console.log(data)
-
     return (
         <section className="max-w-7xl mx-auto px-4 pb-12">
             <div className="pt-12">
@@ -37,8 +36,10 @@ const MoviesPage = () => {
                         <h1 className="font-bold text-4xl pl-4 text-white">All Movies</h1>
                     </div>
                     <Button className="bg-transparent border border-gray-400 text-lg py-5">
-                        <PlusIcon/>
-                        New movie
+                        <Link to={'/add-movie'} className="flex items-center gap-2">
+                            <PlusIcon/>
+                            New movie
+                        </Link>
                     </Button>
                 </div>
                 {data && (

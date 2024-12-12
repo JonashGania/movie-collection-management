@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { getGenres, queryMoviesByGenre } from "../db/queries.js"
+import { getGenres, queryMoviesByGenre } from "../db/getQueries.js"
 
 export const getAllGenres = async (req: Request, res: Response) => {
     try {
