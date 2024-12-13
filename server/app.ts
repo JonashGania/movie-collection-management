@@ -14,6 +14,7 @@ app.use(cors());
 app.use('/api', moviesRouter);
 app.use('/api', genresRouter);
 
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
