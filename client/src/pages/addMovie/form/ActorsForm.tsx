@@ -16,7 +16,6 @@ const ActorsForm = () => {
                         <Input 
                             id="director" 
                             type="text" 
-                            name="director" 
                             placeholder="name" 
                             value={director}
                             className="py-5"
