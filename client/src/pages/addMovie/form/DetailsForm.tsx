@@ -20,7 +20,7 @@ const MovieDetailsForm = () => {
                     <Input 
                         type="text" 
                         id="release-date" 
-                        name="release-date" 
+                        name="release_date" 
                         placeholder="'2000-01-20'" 
                         className="text-black py-5"
                     />
