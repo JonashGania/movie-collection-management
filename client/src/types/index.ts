@@ -23,3 +23,21 @@ export interface GenreMovies {
     genre: string,
     movies: Movies[]
 }
+
+export interface MovieFormState {
+    title: string,
+    release_date: string,
+    description: string,
+    duration: number,
+    rating: number,
+    genres: number[],
+    actors: string[],
+    directors: string[],
+}
+
+export type MovieFormAction =
+    | { type: 'SET_FIELD', field: keyof MovieFormState, value: string | number | string[] | number[] }
+    | { type: 'SET_GENRES', genres: number[] }
+    | { type: 'SET_DIRECTORS', directors: string[] }
+    | { type: 'SET_ACTORS', actors: string[] }
+    | { type: 'RESET' }

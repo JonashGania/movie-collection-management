@@ -1,20 +1,28 @@
-import { useState } from "react"
 import { useQuery } from "@tanstack/react-query";
 import { getAllGenres } from "@/api";
 
-const GenresForm = () => {
-    const [selectedGenre, setSelectedGenre] = useState<number[]>([]);
+interface GenresFormProps {
+    selectedGenres: number[],
+    handleSetGenres: (genres: number[]) => void,
+}
 
+const GenresForm = ({ selectedGenres, handleSetGenres }: GenresFormProps) => {
     const {data, isError, isLoading} = useQuery({
         queryKey: ['genres'],
         queryFn: () => getAllGenres() 
     })
 
     const handleGenreSelect = (genreId: number) => {
-        setSelectedGenre((prev) => 
-            prev.includes(genreId) ? prev.filter((g) => g !== genreId) : [...prev, genreId]
-        )
+        const updatedGenres = selectedGenres.includes(genreId) 
+            ? selectedGenres.filter((g) => g !== genreId) 
+            : [...selectedGenres, genreId]
+
+        handleSetGenres(updatedGenres)
     }
+
+    const selectedGenreNames = data
+        ? data.filter((genre) => selectedGenres.includes(genre.id)).map((genre) => genre.name)
+        : []
 
     return (
         <div className="">
@@ -24,8 +32,8 @@ const GenresForm = () => {
                     <li 
                         key={genre.id}
                         onClick={() => handleGenreSelect(genre.id)} 
-                        className={`py-1 px-4 rounded-xl text-black font-medium text-sm cursor-pointer bg-zinc-300 ${
-                                selectedGenre.includes(genre.id) ? 'bg-cyan-700' : 'bg-zinc-300 hover:bg-zinc-200'
+                        className={`py-1 px-4 rounded-xl text-black font-medium text-sm cursor-pointer ${
+                                selectedGenres.includes(genre.id) ? 'bg-cyan-700' : 'bg-zinc-300 hover:bg-zinc-200'
                             }`}
                     >
                         {genre.name}
@@ -34,7 +42,7 @@ const GenresForm = () => {
             </ul>
 
             <div className="flex flex-col gap-2 pt-8 max-w-[350px] mx-auto">
-                {selectedGenre.map((genre, index) => (
+                {selectedGenreNames.map((genre, index) => (
                     <div key={index} className="w-full py-2 px-2 border border-black rounded-md">
                         <span className="font-medium">{genre}</span>
                     </div>
