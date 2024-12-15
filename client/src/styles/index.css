@@ -68,6 +68,10 @@
     }
 }
 
+.active{
+  @apply text-cyan-300 font-medium
+}
+
 
 .movie-wrapper{
   display: grid;

@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { getAllMovies } from "../../api";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
-import { Link } from "react-router-dom";
 import MovieWrapper from "../../components/MovieWrapper";
 import PaginationComponent from "@/components/PaginationComponent";
+import NewMovieButton from "@/components/NewMovieButton";
 
 const MoviesPage = () => {
     const [page, setPage] = useState(1);
@@ -35,12 +33,7 @@ const MoviesPage = () => {
                         <div className="w-[5px] h-10 bg-cyan-300 rounded-lg"></div>
                         <h1 className="font-bold text-4xl pl-4 text-white">All Movies</h1>
                     </div>
-                    <Button className="bg-transparent border border-gray-400 text-lg py-5">
-                        <Link to={'/add-movie'} className="flex items-center gap-2">
-                            <PlusIcon/>
-                            New movie
-                        </Link>
-                    </Button>
+                    <NewMovieButton />
                 </div>
                 {data && (
                     <>

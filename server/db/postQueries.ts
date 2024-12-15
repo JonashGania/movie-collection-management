@@ -8,7 +8,7 @@ export const createMovieQuery = async (
     duration: number,
     slug: string,
     poster_url: Promise<string>,
-    genres: string[],
+    genres: number[],
     actors: string[],
     directors: string[],
 ) => {
@@ -34,7 +34,7 @@ export const createMovieQuery = async (
    
         await client.query(`
             INSERT INTO movie_genres (movie_id, genre_id) 
-            SELECT $1, unnest($2::uuid[])`,
+            SELECT $1, unnest($2::integer[])`,
             [movieId, genres]
         )
 
@@ -52,7 +52,7 @@ export const createMovieQuery = async (
 
         await client.query(`
             INSERT INTO movie_directors(movie_id, director_id)
-            SELECT $1, unnest($2::uuid[])`,
+            SELECT $1, unnest($2::integer[])`,
             [movieId, directorIds]
         )
 
@@ -70,7 +70,7 @@ export const createMovieQuery = async (
 
         await client.query(`
             INSERT INTO movie_actors (movie_id, actor_id)
-            SELECT $1, unnest($2::uuid[])`,
+            SELECT $1, unnest($2::integer[])`,
             [movieId, actorIds]
         )
 

@@ -10,7 +10,7 @@ export const validateForm = (state: MovieFormState): string[] => {
     if (!state.duration || !Number.isInteger(state.duration)){
         errors.push('Duration must be a valid number in minutes.');
     }
-    if (state.rating > 10 || state.rating < 0 || !Number.isInteger(state.rating)) {
+    if (state.rating > 10 || state.rating < 0 ) {
         errors.push('Rating must be a number between 0 and 10.');
     }
     if (!state.release_date.trim()) {

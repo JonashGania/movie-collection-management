@@ -46,7 +46,8 @@ const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProp
                         className="text-black py-5"
                         max="10"
                         min="0"
-                        onChange={(e) => handleSetField('rating', parseInt(e.target.value, 10))}
+                        step="0.1"
+                        onChange={(e) => handleSetField('rating', parseFloat(e.target.value))}
                     />
                 </div>
                 <div className="w-[50%]">

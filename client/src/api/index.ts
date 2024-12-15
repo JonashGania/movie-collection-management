@@ -1,15 +1,13 @@
-import { MoviesPaginated, Genres, GenreMovies } from "../types"
-import axios from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+import { MoviesPaginated, Genres, GenreMovies, MovieFormState } from "../types"
+import axiosInstance from "@/utils/axiosInstance";
 
 export const getAllMovies = async (page: string): Promise<MoviesPaginated> => {
-    const response = await axios.get(`${API_BASE_URL}/api/movies?page=` + page);
+    const response = await axiosInstance.get('/movies?page=' + page);
     return response.data
 }
 
 export const getAllGenres = async (): Promise<Genres[]> => {
-    const response = await axios.get(`${API_BASE_URL}/api/genres`);
+    const response = await axiosInstance.get('/genres');
     return response.data
 }
 
@@ -17,6 +15,15 @@ export const getAllMoviesbyGenre = async (genreId: string | undefined): Promise<
     if (!genreId) {
         throw new Error("Genre ID is required");
     }
-    const response = await axios.get(`${API_BASE_URL}/api/genres/${genreId}`);
+    const response = await axiosInstance.get(`/genres/${genreId}`);
     return response.data
 }
+
+export const postCreateMovie = async (movieData: MovieFormState) => {
+    const response = await axiosInstance.post('/movies', movieData, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return response.data;
+};

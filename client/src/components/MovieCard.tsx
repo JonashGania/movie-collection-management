@@ -14,7 +14,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                         <img 
                             src={movie.poster_url} 
                             alt={`${movie.title} poster`} 
-                            className="w-full h-full object-cover rounded-t-md"
+                            className="w-full h-[350px] object-cover rounded-t-md"
                         />
                     </div>
                     

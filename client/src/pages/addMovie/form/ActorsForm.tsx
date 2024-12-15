@@ -37,7 +37,11 @@ const ActorsForm = ({ actors, handleSetActors }: ActorsFormProps) => {
                     </div>
                 ))}
             </div>
-            <Button className="py-6" onClick={addAnotherActor}>
+            <Button 
+                className="py-6" 
+                onClick={addAnotherActor} 
+                type="button"
+            >
                 <PlusIcon/>
                 Another Actor
             </Button>

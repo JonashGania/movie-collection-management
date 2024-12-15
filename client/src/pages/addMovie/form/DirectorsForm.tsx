@@ -37,7 +37,11 @@ const DirectorsForm = ({ directors, handleSetDirectors }: DirectorsFormProps) =>
                     </div>
                 ))}
             </div>
-            <Button onClick={addAnotherDirector} className="py-6">
+            <Button 
+                onClick={addAnotherDirector} 
+                className="py-6" 
+                type="button"
+            >
                 <PlusIcon/>
                 Another Director
             </Button>
