@@ -87,3 +87,23 @@ export const queryMoviesByGenre = async(slug: string, page: number) => {
         return [];
     }
 }
+
+export const queryMovieDetails = async (slug: string) => {
+    try {
+        const { rows } = await pool.query(`
+            SELECT
+                m.id, m.title, m.release_date, m.description, m.rating, m.duration, 
+                STRING_AGG(g.name, ', '), 
+                mi.poster_url
+            FROM genres g
+            INNER JOIN movie_genres mg ON g.id = mg.genre_id
+            INNER JOIN movies m ON mg.movie_id = m.id
+            INNER JOIN movie_images mi ON m.id = mi.movie_id
+            WHERE m.slug = $1
+            GROUP BY m.id, mi.poster_url;`,
+            [slug]
+        )
+    } catch (error) {
+        
+    }
+}
