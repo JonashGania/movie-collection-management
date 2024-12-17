@@ -93,17 +93,42 @@ export const queryMovieDetails = async (slug: string) => {
         const { rows } = await pool.query(`
             SELECT
                 m.id, m.title, m.release_date, m.description, m.rating, m.duration, 
-                STRING_AGG(g.name, ', '), 
-                mi.poster_url
-            FROM genres g
-            INNER JOIN movie_genres mg ON g.id = mg.genre_id
-            INNER JOIN movies m ON mg.movie_id = m.id
+                mi.poster_url,
+                COALESCE(genres.genres, '{}') AS genres,
+                COALESCE(actors, '{}') AS actors,
+                COALESCE(directors.directors, '{}') AS directors
+            FROM movies m
+
             INNER JOIN movie_images mi ON m.id = mi.movie_id
-            WHERE m.slug = $1
-            GROUP BY m.id, mi.poster_url;`,
+
+            LEFT JOIN (
+                SELECT mg.movie_id, ARRAY_AGG(DISTINCT g.name) AS genres
+                FROM movie_genres mg
+                INNER JOIN genres g ON mg.genre_id = g.id
+                GROUP BY mg.movie_id
+            ) genres ON m.id = genres.movie_id
+
+            LEFT JOIN (
+                SELECT ma.movie_id, ARRAY_AGG(DISTINCT a.actor_name) AS actors
+                FROM movie_actors ma
+                INNER JOIN actors a ON ma.actor_id = a.id
+                GROUP BY ma.movie_id
+            ) actors ON m.id = actors.movie_id
+
+            LEFT JOIN (
+                SELECT md.movie_id, ARRAY_AGG(DISTINCT d.director_name) AS directors
+                FROM movie_directors md
+                INNER JOIN directors d ON md.director_id = d.id
+                GROUP BY md.movie_id
+            ) directors ON m.id = directors.movie_id
+
+            WHERE m.slug = $1`,
             [slug]
         )
+
+        return rows[0] || null
     } catch (error) {
-        
+        console.error('error fetching all movie details', error);
+        return null
     }
 }
