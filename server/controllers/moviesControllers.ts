@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { getMoviesPaginated, getMoviePoster } from "../db/getQueries.js"
+import { getMoviesPaginated, getMoviePoster, queryMovieDetails } from "../db/getQueries.js"
 import { createMovieQuery } from "../db/postQueries.js";
 import { movieTitleSlug } from "../utils/generateSlug.js";
 import { fetchMoviePoster } from "../utils/fetchMoviePoster.js";
@@ -43,6 +43,29 @@ export const getAllMoviesPaginated = async(req: Request, res: Response) => {
         res.status(500).json({ error: "An error occured while fetching movies." });
     }
 }
+
+export const getMovieDetails = async (req: Request, res: Response, next: NextFunction) => {
+    const slug = req.params.movieId;
+
+    try {
+        const movieDetails = await queryMovieDetails(slug);
+
+        if (!movieDetails) {
+            res.status(404).json({ error: "Movie not found" });
+            return
+        }
+
+        res.status(200).json(movieDetails);
+    } catch (error: any) {
+        console.error('Error in getMovieDetails controller', error.message || error);
+
+        if (error.code === '22P02') {
+            res.status(400).json({ error: 'Invalid input syntax for Movie ID.' })
+        }
+        
+        res.status(500).json({ error: "An error occured while fetching movie details" });
+    }
+} 
 
 export const createMovies = async (req: Request, res: Response, next: NextFunction) => {
     const {  
