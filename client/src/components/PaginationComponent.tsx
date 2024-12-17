@@ -30,8 +30,8 @@ const PaginationComponent = ({ totalPages, currentPage, onPageChange }: Paginati
                     />
                 </PaginationItem>
 
-                { Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <PaginationItem>
+                { Array.from({ length: totalPages }, (_, i) => i + 1).map((page, index) => (
+                    <PaginationItem key={index}>
                         <button 
                             className={`text-white px-4 py-2 border hover:bg-[rgba(71,85,105,0.3)] rounded-md ${currentPage === page ? 'border-[rgba(102,102,102,0.3)]' : 'border-transparent'}`}
                             onClick={() => handlePageChange(page)}
