@@ -10,7 +10,11 @@ const GenresWrapper = ({ genres }: GenresWrapperProps) => {
         <div className="pt-8">
             <div className="genres-wrapper w-full">
                 {genres.map(genre => (
-                    <Link to={`/genres/${genre.slug}`} key={genre.id} className="rounded-md bg-[#1f2833] flex flex-col max-w-[355px] sm:max-w-[100%] w-full">
+                    <Link 
+                        to={`/genres/${genre.slug}`} 
+                        key={genre.id} 
+                        className="rounded-md bg-[#1f2833] flex flex-col max-w-[355px] sm:max-w-[100%] w-full"
+                    >
                         <div className="w-full h-[200px]">
                             <img 
                                 src={`/genre-images/${genre.name.toLowerCase()}.webp`} 
