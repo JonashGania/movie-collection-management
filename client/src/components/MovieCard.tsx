@@ -1,5 +1,6 @@
 import { Movies } from "@/types"
 import { formatYear } from "@/utils/formatYear";
+import { Link } from "react-router-dom";
 
 interface MovieCardProps {
     movie: Movies;
@@ -7,7 +8,11 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie }: MovieCardProps) => {
     return (
-        <div key={movie.id} className="movie-card rounded-md bg-[#1f2833] flex flex-col pb-4 max-w-[235px] w-full">
+        <Link 
+            to={`/movies/${movie.slug}`} 
+            key={movie.id} 
+            className="movie-card rounded-md bg-[#1f2833] flex flex-col pb-4 max-w-[235px] w-full"
+        >
             <div className="relative w-full">
                 {movie.poster_url ? (
                     <div className="movie-image">
@@ -39,7 +44,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                     <span className="text-cyan-500 font-medium">Add to watchlist</span>
                 </button>
             </div>
-        </div>
+        </Link>
     )
 }
 
