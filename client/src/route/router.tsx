@@ -4,7 +4,6 @@ import HomePage from "@/pages/home/HomePage"
 import MoviesPage from "@/pages/movies/MoviesPage"
 import GenresPage from "@/pages/genres/GenresPage"
 import GenreMoviesPage from "@/pages/moviesByGenres/GenreMoviesPage"
-import AddMoviePage from "@/pages/addMovie/AddMoviePage"
 import MovieDetailsPage from "@/pages/movieDetails/MovieDetailsPage"
 
 export const router = createBrowserRouter([
@@ -33,9 +32,5 @@ export const router = createBrowserRouter([
           element: <GenreMoviesPage />
         }
       ]
-    },
-    {
-      path: '/add-movie',
-      element: <AddMoviePage />
     }
   ])
