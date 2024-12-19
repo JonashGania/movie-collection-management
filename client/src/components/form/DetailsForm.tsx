@@ -32,6 +32,7 @@ const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProp
                         name="release_date" 
                         placeholder="YYYY-MM-DD" 
                         className="text-black py-5"
+                        autoComplete="off"
                         onChange={(e) => handleSetField('release_date', e.target.value)}
                     />
                 </div>

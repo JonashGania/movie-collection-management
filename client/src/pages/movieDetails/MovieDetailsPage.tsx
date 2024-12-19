@@ -3,6 +3,9 @@ import { getMovieDetails } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 import { CalendarDays, Clock, Star, PlusIcon } from "lucide-react";
 import { formatYear } from "@/utils/formatYear";
+import { Link } from "react-router-dom";
+import DeleteButton from "@/components/DeleteButton";
+import EditButton from "@/components/EditButton";
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams<{movieId: string}>();
@@ -58,8 +61,14 @@ const MovieDetailsPage = () => {
                 <div className="flex-1 flex flex-col justify-between">
                     <div>
                         <div className="flex items-center gap-4 pb-2">
-                            {data.genres.map((genre, index) => (
-                                <div key={index} className="text-cyan-500 font-medium px-4 py-1 bg-[rgba(90,115,146,0.2)] rounded-2xl">{genre}</div>
+                            {data.genres.map((genre) => (
+                                <Link
+                                    to={`/genres/${genre.genreSlug}`}
+                                    key={genre.genreId} 
+                                    className="text-cyan-500 font-medium px-4 py-1 bg-[rgba(90,115,146,0.2)] rounded-2xl"
+                                >
+                                    {genre.genreName}
+                                </Link>
                             ))}
                         </div>
                         <p className="text-white pb-3">{data.description}</p>
@@ -85,8 +94,8 @@ const MovieDetailsPage = () => {
                             <PlusIcon className="h-5 w-5" color="#fff"/>
                             <span className="text-white">Add to Watchlist</span>
                         </button>
-                        <button className="px-6 py-1 bg-white rounded-3xl text-lg font-medium">Edit</button>
-                        <button className="px-6 py-1 bg-red-500 rounded-3xl text-lg text-white font-medium">Delete</button>
+                        <EditButton />
+                        <DeleteButton movieId={movieId}/>
                     </div>
                 </div>
             </div>

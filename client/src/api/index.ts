@@ -36,3 +36,12 @@ export const postCreateMovie = async (movieData: MovieFormState) => {
     });
     return response.data;
 };
+
+export const deleteMovie = async (movieId: string | undefined) => {
+    if (!movieId) {
+        throw new Error("Movie ID is required");
+    }
+
+    const response = await axiosInstance.delete(`/movies/${movieId}`)
+    return response.data;
+}

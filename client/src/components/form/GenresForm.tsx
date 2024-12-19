@@ -7,7 +7,7 @@ interface GenresFormProps {
 }
 
 const GenresForm = ({ selectedGenres, handleSetGenres }: GenresFormProps) => {
-    const {data, isError, isLoading} = useQuery({
+    const {data} = useQuery({
         queryKey: ['genres'],
         queryFn: () => getAllGenres() 
     })
