@@ -1,7 +1,13 @@
 import { Dialog, DialogTrigger } from "./ui/dialog"
-import EditMovieModal from "./EditMovieModal"
+import { MovieFormState } from "@/types"
+import MovieModal from "./MovieModal"
 
-const EditButton = () => {
+interface EditButtonProps {
+    movieData?: MovieFormState,
+    movieId?: string
+}
+
+const EditButton = ({ movieData, movieId }: EditButtonProps) => {
     return (
         <Dialog>
             <DialogTrigger>
@@ -10,7 +16,7 @@ const EditButton = () => {
                     Edit
                 </button>
             </DialogTrigger>
-            <EditMovieModal />
+            <MovieModal initialData={movieData} movieId={movieId}/>
         </Dialog>
     )
 }
