@@ -103,7 +103,7 @@ export const queryMovieDetails = async (slug: string) => {
 
             LEFT JOIN (
                 SELECT mg.movie_id, 
-                ARRAY_AGG(DISTINCT jsonb_build_object('genredId', g.id, 'genreName', g.name, 'genreSlug', g.slug)) AS genres
+                ARRAY_AGG(DISTINCT jsonb_build_object('genreId', g.id, 'genreName', g.name, 'genreSlug', g.slug)) AS genres
                 FROM movie_genres mg
                 INNER JOIN genres g ON mg.genre_id = g.id
                 GROUP BY mg.movie_id
