@@ -3,18 +3,28 @@ import { getMovieDetails } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 import { CalendarDays, Clock, Star, PlusIcon } from "lucide-react";
 import { formatYear } from "@/utils/formatYear";
+import { formatDate } from "@/utils/formatDate";
 import { Link } from "react-router-dom";
 import DeleteButton from "@/components/DeleteButton";
 import EditButton from "@/components/EditButton";
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams<{movieId: string}>();
-
+    
     const {data, isLoading, isError} = useQuery({
         queryKey: ['movieDetails', movieId],
         queryFn: () => getMovieDetails(movieId),
         enabled: !!movieId
     })
+
+    const movieData = data ? {
+            ...data,
+            release_date: formatDate(data.release_date),
+            genres: data.genres.map((genre: {genreId: number }) => genre.genreId)
+        }
+    : undefined;
+
+    console.log(movieData);
 
     if (!data) {
         return <h2>No details</h2>
@@ -94,7 +104,7 @@ const MovieDetailsPage = () => {
                             <PlusIcon className="h-5 w-5" color="#fff"/>
                             <span className="text-white">Add to Watchlist</span>
                         </button>
-                        <EditButton />
+                        <EditButton movieData={movieData} movieId={movieId}/>
                         <DeleteButton movieId={movieId}/>
                     </div>
                 </div>

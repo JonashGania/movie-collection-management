@@ -24,6 +24,7 @@ export interface GenreMovies {
     movies: Movies[]
 }
 
+
 export interface MovieFormState {
     title: string,
     release_date: string,
@@ -41,3 +42,13 @@ export type MovieFormAction =
     | { type: 'SET_DIRECTORS', directors: string[] }
     | { type: 'SET_ACTORS', actors: string[] }
     | { type: 'RESET' }
+
+export interface MovieDetails extends Omit<MovieFormState, 'genres'> {
+    poster_url: string,
+    genres: {genreId: number, genreName: string, genreSlug: string}[]
+}
+ 
+export interface MutationFnArgs {
+    movieData: MovieFormState,
+    movieId?: string
+}
