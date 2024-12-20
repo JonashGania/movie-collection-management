@@ -1,7 +1,7 @@
 import { Button } from "./ui/button"
 import { PlusIcon } from "lucide-react"
 import { Dialog, DialogTrigger } from "./ui/dialog"
-import AddMovieModal from "./AddMovieModal"
+import MovieModal from "./MovieModal"
 
 const NewMovieButton = () => {
     return (
@@ -12,7 +12,7 @@ const NewMovieButton = () => {
                     New movie
                 </Button>
             </DialogTrigger>
-            <AddMovieModal />
+            <MovieModal />
         </Dialog>
         
     )
