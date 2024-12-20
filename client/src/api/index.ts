@@ -1,4 +1,4 @@
-import { MoviesPaginated, Genres, GenreMovies, MovieFormState } from "../types"
+import { MoviesPaginated, Genres, GenreMovies, MovieFormState, MovieDetails } from "../types"
 import axiosInstance from "@/utils/axiosInstance";
 
 export const getAllMovies = async (page: string): Promise<MoviesPaginated> => {
@@ -11,7 +11,7 @@ export const getAllGenres = async (): Promise<Genres[]> => {
     return response.data
 }
 
-export const getMovieDetails = async (movieId: string | undefined) => {
+export const getMovieDetails = async (movieId: string | undefined): Promise<MovieDetails> => {
     if (!movieId) {
         throw new Error("Movie ID is required");
     }
@@ -44,4 +44,18 @@ export const deleteMovie = async (movieId: string | undefined) => {
 
     const response = await axiosInstance.delete(`/movies/${movieId}`)
     return response.data;
+}
+
+export const putUpdateMovie = async (movieData: MovieFormState, movieId: string | undefined) => {
+    if (!movieId) {
+        throw new Error("Movie ID is required")
+    }
+
+    const response = await axiosInstance.put(`/movies/${movieId}`, movieData, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    return response.data
 }
