@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express"
 import { getMoviesPaginated, getMoviePoster, queryMovieDetails } from "../db/getQueries.js"
 import { createMovieQuery } from "../db/postQueries.js";
 import { queryDeleteMovie } from "../db/deleteQueries.js";
+import { updateMovieQuery } from "../db/updateQueries.js";
 import { movieTitleSlug } from "../utils/generateSlug.js";
 import { fetchMoviePoster } from "../utils/fetchMoviePoster.js";
 
@@ -122,5 +123,38 @@ export const deleteMovie = async (req: Request, res: Response, next: NextFunctio
                 details: error.message 
             });
         }
+    }
+}
+
+export const updateMovie = async (req: Request, res: Response, next: NextFunction) => {
+    const {
+        id,  
+        title,
+        release_date,
+        rating,
+        duration,
+        description,
+        genres,
+        actors,
+        directors
+    } = req.body
+
+    try {
+        if (!id || !title || !release_date || !rating || !duration || !description) {
+            res.status(400).send("Missing required fileds: titles, release_date, rating, duration, description.")
+            return
+        }
+
+        if (!Array.isArray(genres) || !Array.isArray(actors) || !Array.isArray(directors)) {
+            res.status(400).send("Invalid data: genres, actors, directors must be an arrays.")
+            return
+        }
+
+        await updateMovieQuery(id, title, release_date, rating, description, duration, genres, actors, directors)
+
+        res.status(201).send("Movie updated successfully.");
+    } catch (error) {
+        console.error('Error updating movie', error)
+        res.status(500).json({ error: "An error occured while updating the movie" })
     }
 }
