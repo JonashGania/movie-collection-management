@@ -5,6 +5,7 @@ import MoviesPage from "@/pages/movies/MoviesPage"
 import GenresPage from "@/pages/genres/GenresPage"
 import GenreMoviesPage from "@/pages/moviesByGenres/GenreMoviesPage"
 import MovieDetailsPage from "@/pages/movieDetails/MovieDetailsPage"
+import Watchlist from "@/pages/watchlist/Watchlist"
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
         {
           path: '/genres/:genreId',
           element: <GenreMoviesPage />
+        },
+        {
+          path: '/watchlist',
+          element: <Watchlist />
         }
       ]
     }

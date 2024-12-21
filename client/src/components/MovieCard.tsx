@@ -41,7 +41,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             <div className="px-2 pt-4">
                 <button className="bg-[rgba(90,115,146,0.2)] w-full px-4 py-2 rounded-3xl hover:bg-[rgba(90,115,146,0.3)] duration-200 flex items-center gap-2 justify-center">
                     <img src="/plus-sign.svg" alt="plus sign" />
-                    <span className="text-cyan-500 font-medium">Add to watchlist</span>
+                    <span className="text-cyan-500 font-medium">Watchlist</span>
                 </button>
             </div>
         </Link>

@@ -133,3 +133,19 @@ export const queryMovieDetails = async (slug: string) => {
         return null
     }
 }
+
+export const getWatchlistsQuery = async () => {
+    try {
+        const { rows } = await pool.query(`
+            SELECT m.title, m.rating, m.duration, m.release_date, m.slug
+            FROM movies m
+            JOIN movie_watchlist mw ON m.id = mw.movie_id;`,
+
+        )
+
+        return rows.length > 0 ? rows : [];
+    } catch (error) {
+        console.error('error fetching movie watchlists', error);
+        return null
+    }
+}

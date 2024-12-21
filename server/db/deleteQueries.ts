@@ -50,4 +50,16 @@ export const queryDeleteMovie = async (slug: string) => {
     } finally {
         client.release();
     }
-} 
+}
+
+export const removeMovieWatchlistQuery = async (movieId: number) => {
+    try {
+        await pool.query(`
+            DELETE FROM movie_watchlist
+            WHERE movie_id = $1;`,
+            [movieId]
+        )
+    } catch (error) {
+        console.error('Error removing movie from watchlist', error);
+    }
+}

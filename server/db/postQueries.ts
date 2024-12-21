@@ -83,3 +83,16 @@ export const createMovieQuery = async (
         client.release();
     }
 }
+
+export const addMovieWatchlistQuery = async (movieId: number) => {
+    try {
+        await pool.query(`
+            INSERT INTO movie_watchlist (movie_id)
+            VALUES ($1)
+            ON CONFLICT (movie_id) DO NOTHING;`,
+            [movieId]
+        )
+    } catch (error) {
+        console.error('Error adding movie in watchlist', error);
+    }
+}
