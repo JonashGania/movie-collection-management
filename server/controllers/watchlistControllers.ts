@@ -33,16 +33,26 @@ export const addToWatchlist = async (req: Request, res: Response, next: NextFunc
         res.status(201).send("Movie added to watchlist successfully");
     } catch (error) {
         console.error('Error adding movie to watchlist', error);
-        res.status(500).send("An error occured while adding movie to watchlist")
+        res.status(500).json({ error: "An error occured while adding movie to watchlist" })
     }
 }
 
-// export const removeToWatchlist = async (req: Request, res: Response, next: NextFunction) => {
-//     const { id } = req.params
+export const removeFromWatchlist = async (req: Request, res: Response, next: NextFunction) => {
+    const id  = req.params.movieId
 
-//     try {
-//         await removeMovieWatchlistQuery(id)
-//     } catch (error) {
-        
-//     }
-// }
+    try {
+        const movieId = Number(id);
+
+        if (isNaN(movieId)) {
+            res.status(400).json({ error: 'Invalid Movie ID' })
+            return
+        }
+
+        await removeMovieWatchlistQuery(movieId)
+
+        res.status(200).send('Movie removed from watchlist successfully');
+    } catch (error) {
+        console.error('Error removing movie from watchlist', error);
+        res.status(500).json({ error: "An error occured while removing movie from watchlist"});
+    }
+}
