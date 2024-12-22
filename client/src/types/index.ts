@@ -26,6 +26,7 @@ export interface GenreMovies {
 
 
 export interface MovieFormState {
+    id: number,
     title: string,
     release_date: string,
     description: string,
@@ -51,4 +52,15 @@ export interface MovieDetails extends Omit<MovieFormState, 'genres'> {
 export interface MutationFnArgs {
     movieData: MovieFormState,
     movieId?: string
+}
+
+export interface WatchlistMovieDetails {
+    id: number,
+    title: string,
+    description: string,
+    rating: number,
+    duration: number,
+    release_date: string,
+    slug: string,
+    poster_url: string
 }
