@@ -1,21 +1,27 @@
 import { useParams } from "react-router-dom"
 import { getMovieDetails } from "@/api";
 import { useQuery } from "@tanstack/react-query";
-import { CalendarDays, Clock, Star, PlusIcon } from "lucide-react";
+import { CalendarDays, Clock, Star, PlusIcon, Check } from "lucide-react";
+import {OrbitProgress} from 'react-loading-indicators'
 import { formatYear } from "@/utils/formatYear";
 import { formatDate } from "@/utils/formatDate";
 import { Link } from "react-router-dom";
+import { useWatchlist } from "@/context/WatchlistContext";
 import DeleteButton from "@/components/DeleteButton";
 import EditButton from "@/components/EditButton";
 
+
 const MovieDetailsPage = () => {
     const { movieId } = useParams<{movieId: string}>();
+    const { watchlist, addMovieToWatchlist, removeMovieFromWatchlist, isAdding } = useWatchlist();
     
     const {data, isLoading, isError} = useQuery({
         queryKey: ['movieDetails', movieId],
         queryFn: () => getMovieDetails(movieId),
         enabled: !!movieId
     })
+    
+
 
     const movieData = data ? {
             ...data,
@@ -24,10 +30,20 @@ const MovieDetailsPage = () => {
         }
     : undefined;
 
-    console.log(movieData);
 
     if (!data) {
         return <h2>No details</h2>
+    }
+
+    const isInWatchlist = watchlist.some((item) => item.id === data.id);
+    const isAddingMovie = isAdding(data.id);
+
+    const handleWatchlistClick = () => {
+        if (isInWatchlist) {
+            removeMovieFromWatchlist(data.id)
+        } else {
+            addMovieToWatchlist(data.id)
+        }
     }
 
     return (
@@ -100,9 +116,28 @@ const MovieDetailsPage = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        <button className="flex items-center gap-3 bg-cyan-700 hover:bg-cyan-600 px-6 py-2 rounded-3xl">
-                            <PlusIcon className="h-5 w-5" color="#fff"/>
-                            <span className="text-white">Add to Watchlist</span>
+                        <button 
+                            onClick={handleWatchlistClick}
+                            className="flex items-center justify-center gap-2 bg-cyan-700 hover:bg-cyan-600 px-6 py-2 rounded-3xl w-[195px]"
+                        >
+                            {isAddingMovie ? (
+                                <OrbitProgress color="#ffffff" style={{ fontSize: "4px" }}/>
+                            ) : (
+                                <>
+                                    {isInWatchlist ? (
+                                        <>
+                                           <Check className="h-6 w-5" color="#ffffff"/>
+                                           <span className="text-white">In Watchlist</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <PlusIcon className="h-6 w-5" color="#ffffff"/>
+                                            <span className="text-white">Add to Watchlist</span>
+                                        </>
+                                    )}
+                                    
+                                </>
+                            )}
                         </button>
                         <EditButton movieData={movieData} movieId={movieId}/>
                         <DeleteButton movieId={movieId}/>
