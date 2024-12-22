@@ -26,7 +26,7 @@ const MoviesPage = () => {
     }
 
     return (
-        <section className="max-w-7xl mx-auto px-4 pb-12">
+        <section className="max-w-7xl w-full mx-auto px-4 pb-12">
             <div className="pt-12">
                 <div className="movies-header flex justify-between items-center">
                     <div className="flex items-center">
