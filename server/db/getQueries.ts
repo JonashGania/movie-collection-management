@@ -137,10 +137,10 @@ export const queryMovieDetails = async (slug: string) => {
 export const getWatchlistsQuery = async () => {
     try {
         const { rows } = await pool.query(`
-            SELECT m.title, m.rating, m.duration, m.release_date, m.slug
-            FROM movies m
-            JOIN movie_watchlist mw ON m.id = mw.movie_id;`,
-
+            SELECT m.id, m.title, m.rating, m.duration, m.description, m.release_date, m.slug, mi.poster_url
+            FROM movie_watchlist mw
+            JOIN movies m ON mw.movie_id = m.id
+            JOIN movie_images mi ON m.id = mi.movie_id;`,
         )
 
         return rows.length > 0 ? rows : [];
