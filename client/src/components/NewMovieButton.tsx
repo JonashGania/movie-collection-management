@@ -7,9 +7,10 @@ const NewMovieButton = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button className="bg-transparent border border-gray-400 text-lg py-5 flex items-center gap-2">
+                <Button className="bg-transparent border border-gray-400 py-5 flex items-center gap-2">
                     <PlusIcon/>
-                    New movie
+                    <span className="sm:block hidden text-lg">New Movie</span>
+                    <span className="sm:hidden block text-lg">Movie</span>
                 </Button>
             </DialogTrigger>
             <MovieModal />

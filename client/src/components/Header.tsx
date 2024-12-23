@@ -1,7 +1,11 @@
 import { NavLink, Link } from "react-router-dom"
-
+import { Menu } from "lucide-react";
+import Sidebar from "./Sidebar";
+import { useState } from "react";
 
 const Header = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
     const links = [
         {
             name: 'Home',
@@ -17,11 +21,15 @@ const Header = () => {
         },
     ];
 
+    const handleSidebarToggle = () => {
+        setIsOpen(!isOpen);
+    }
+
     return (
         <header className="w-full">
             <nav className="max-w-7xl h-[100px] mx-auto px-4 flex items-center justify-between">
                 <h1 className="text-cyan-300 text-xl font-semibold">Movie Collection</h1>
-                <div className="flex items-center">
+                <div className="hidden sm:flex items-center ">
                     <ul className="flex items-center gap-8 text-zinc-200 text-lg font-medium pr-3">
                         {links.map((item, index) => (
                             <NavLink 
@@ -40,8 +48,18 @@ const Header = () => {
                         </Link>
                     </div>
                 </div>
-                
+                <div className="flex items-center sm:hidden gap-2">
+                    <button onClick={handleSidebarToggle}>
+                        <Menu className="h-7 w-7" color="#ffffff"/>
+                    </button>
+                    <span className="text-white font-medium text-lg">Menu</span>
+                </div>
             </nav>
+            <Sidebar
+                menuItem={links} 
+                isOpen={isOpen}
+                handleSidebarToggle={handleSidebarToggle}
+            />
         </header>
     )
 }

@@ -11,7 +11,7 @@ const EditButton = ({ movieData, movieId }: EditButtonProps) => {
     return (
         <Dialog>
             <DialogTrigger>
-                <button className="px-6 py-1 bg-gray-300 hover:bg-white rounded-3xl text-lg font-medium"
+                <button className="px-6 py-1 bg-gray-300 hover:bg-white rounded-3xl text-base sm:text-lg font-medium"
                 >
                     Edit
                 </button>

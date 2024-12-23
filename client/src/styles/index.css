@@ -105,6 +105,16 @@
   content: "";
 }
 
+.openMenu.overlay{
+  opacity: 1;
+  visibility: visible;
+}
+
+.openMenu.sidebar {
+  transform: translateX(0);
+} 
+
+
 @media (max-width: 1287px) {
   .movies-header{
     max-width: 988px;
@@ -145,5 +155,9 @@
 
   .movie-card{
     max-width: 100%;
+  }
+
+  .sidebar{
+    width: 250px;
   }
 }
