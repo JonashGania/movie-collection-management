@@ -33,11 +33,11 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 className="relative w-full"
             >
                 {movie.poster_url ? (
-                    <div className="movie-image">
+                    <div className="movie-image aspect-[2/3] overflow-hidden">
                         <img 
                             src={movie.poster_url} 
                             alt={`${movie.title} poster`} 
-                            className="w-full h-[350px] object-cover rounded-t-md"
+                            className="w-full h-full object-cover rounded-t-md"
                         />
                     </div>
                     
@@ -46,21 +46,21 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 )}
                 <div className="absolute w-full h-full top-0 left-0 hover:bg-[rgba(41,41,41,0.1)]"></div>
             </Link>
-            <div className="flex justify-between gap-2 pt-4 px-2">
+            <div className="flex justify-between gap-2 pt-2 sm:pt-4 px-2">
                 <div className="flex items-center gap-1">
                     <img src="/star-icon.svg" alt="star icon" />
-                    <h5 className="text-sm text-gray-300">
-                        <span className="text-gray-300 font-medium">{movie.rating}</span>
+                    <h5 className="text-xs sm:text-sm text-gray-300">
+                        <span className="text-gray-300 text-xs sm:text-base font-medium">{movie.rating}</span>
                         /10
                     </h5>
                 </div>
-                <span className="text-yellow-300 text-sm">{formatYear(movie.release_date)}</span>
+                <span className="text-yellow-300 text-xs">{formatYear(movie.release_date)}</span>
             </div>
-            <h5 className="pt-2 px-2 text-gray-100 font-semibold text-lg leading-5 flex-grow">{movie.title}</h5>
+            <h5 className="pt-2 px-2 text-gray-100 font-semibold text-sm sm:text-lg leading-5 flex-grow">{movie.title}</h5>
             <div className="px-2 pt-4">
                 <button
                     onClick={handleWatchlistClick} 
-                    className="bg-[rgba(90,115,146,0.2)] w-full px-4 py-2 rounded-3xl hover:bg-[rgba(90,115,146,0.3)] duration-200 flex items-center gap-2 justify-center"
+                    className="bg-[rgba(90,115,146,0.2)] w-full px-4 py-1 rounded-3xl hover:bg-[rgba(90,115,146,0.3)] duration-200 flex items-center gap-2 justify-center"
                 >
                     {isAddingMovie ? (
                         <OrbitProgress color="#06b6d4" style={{ fontSize: "4px" }}/>
@@ -71,7 +71,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                             ) : (
                                 <PlusIcon className="h-6 w-5" color="#06b6d4"/>
                             )}
-                            <span className="text-cyan-500 font-medium">Watchlist</span>
+                            <span className="text-cyan-500 text-sm sm:text-base font-medium">Watchlist</span>
                         </>
                     )}
                 </button>
@@ -79,5 +79,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         </div>
     )
 }
+
+
 
 export default MovieCard
