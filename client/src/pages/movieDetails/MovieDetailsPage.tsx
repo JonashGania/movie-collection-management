@@ -77,7 +77,7 @@ const MovieDetailsPage = () => {
             </div>
 
             <div className="flex w-full pt-4 gap-4">
-                <div className="w-[25%] min-w-[100px] relative">
+                <div className="w-[25%] min-w-[100px] sm:min-w-[150px] relative">
                     <img 
                         src={`${data.poster_url}`} 
                         alt={`${data.title} poster`} 
@@ -172,7 +172,7 @@ const MovieDetailsPage = () => {
                 <div className="flex items-center gap-2 pt-4">
                     <button 
                         onClick={handleWatchlistClick}
-                        className="flex items-center justify-center gap-2 bg-cyan-700 hover:bg-cyan-600 px-4 py-2 rounded-3xl"
+                        className="flex items-center justify-center gap-2 bg-cyan-700 hover:bg-cyan-600 px-4 py-1 rounded-3xl"
                     >
                         {isAddingMovie ? (
                             <OrbitProgress color="#ffffff" style={{ fontSize: "4px" }}/>

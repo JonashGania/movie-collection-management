@@ -26,7 +26,6 @@ export interface GenreMovies {
 
 
 export interface MovieFormState {
-    id: number,
     title: string,
     release_date: string,
     description: string,
@@ -45,6 +44,7 @@ export type MovieFormAction =
     | { type: 'RESET' }
 
 export interface MovieDetails extends Omit<MovieFormState, 'genres'> {
+    id: number,
     poster_url: string,
     genres: {genreId: number, genreName: string, genreSlug: string}[]
 }

@@ -13,9 +13,9 @@ const GenresWrapper = ({ genres }: GenresWrapperProps) => {
                     <Link 
                         to={`/genres/${genre.slug}`} 
                         key={genre.id} 
-                        className="rounded-md bg-[#1f2833] flex flex-col max-w-[355px] sm:max-w-[100%] w-full"
+                        className="rounded-md bg-[#1f2833] flex flex-col w-full"
                     >
-                        <div className="w-full h-[200px]">
+                        <div className="w-full h-[170px] overflow-hidden]">
                             <img 
                                 src={`/genre-images/${genre.name.toLowerCase()}.webp`} 
                                 alt={`${genre.name} image`}

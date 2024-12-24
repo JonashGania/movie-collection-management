@@ -21,7 +21,7 @@ const Watchlist = () => {
                                 <div className="flex w-full items-center">
                                     <div className="w-20 mr-4">
                                         <img 
-                                            className="w-full max-h-[100px] object-cover rounded-md" 
+                                            className="w-full max-h-[100px] min-w-[75px] object-cover rounded-md" 
                                             src={movie.poster_url} 
                                             alt={`${movie.title} Poster`} 
                                         />

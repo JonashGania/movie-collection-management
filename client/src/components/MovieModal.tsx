@@ -92,7 +92,7 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
     
 
     return (
-        <DialogContent className="max-w-xl w-full h-[600px] flex flex-col">
+        <DialogContent className="max-w-sm sm:max-w-xl w-full h-[600px] flex flex-col">
             <DialogHeader>
                 <DialogTitle className="text-xl">{initialData ? 'Update Movie' : 'Add New Movie'}</DialogTitle>
             </DialogHeader>
