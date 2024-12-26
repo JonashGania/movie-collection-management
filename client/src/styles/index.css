@@ -73,7 +73,7 @@
 }
 
 
-.movie-wrapper{
+.movie-wrapper, .skeleton-movies-wrapper{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   justify-items: center;
@@ -115,13 +115,6 @@
 } 
 
 
-@media (max-width: 1287px) {
-  .movies-header{
-    max-width: 988px;
-    margin: 0 auto;
-  }
-}
-
 @media (max-width: 930px){
   .genres-wrapper {
     grid-template-columns: repeat(3, 1fr);
@@ -130,7 +123,7 @@
 }
 
 @media (max-width: 820px) {
-  .movie-wrapper{
+  .movie-wrapper, .skeleton-movies-wrapper{
     grid-template-columns: repeat(3, 1fr);
   }
   .genres-wrapper{
@@ -155,7 +148,7 @@
 
 
 @media (max-width: 534px) {
-  .movie-wrapper{
+  .movie-wrapper, .skeleton-movies-wrapper{
     grid-template-columns: repeat(2, 1fr);
   }
   .movie-card{

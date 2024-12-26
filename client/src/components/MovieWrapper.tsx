@@ -2,7 +2,7 @@ import { Movies } from "../types"
 import MovieCard from "./MovieCard"
 
 interface MovieWrapperProps {
-    movies: { movies: Movies[]}
+    movies: { movies: Movies[]},
 }
 
 const MovieWrapper = ({ movies }: MovieWrapperProps) => {

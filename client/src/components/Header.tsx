@@ -1,5 +1,5 @@
 import { NavLink, Link } from "react-router-dom"
-import { Menu } from "lucide-react";
+import { Menu, TvMinimalPlay } from "lucide-react";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
 
@@ -43,7 +43,7 @@ const Header = () => {
                     </ul>
                     <div className="pl-3 border-l-2 border-zinc-600">
                         <Link to={'/watchlist'} className="flex items-center gap-2">
-                            <img src="/square-plus.svg" alt="icon" />
+                            <TvMinimalPlay className="h-5 w-5" color="#ffffff"/>
                            <span className="text-gray-200 font-semibold">Watchlist</span>
                         </Link>
                     </div>

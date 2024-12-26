@@ -1,5 +1,5 @@
-import { X } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import { X, TvMinimalPlay } from "lucide-react"
+import { Link, NavLink } from "react-router-dom"
 
 interface Sidebar {
     menuItem: {name: string, link: string}[],
@@ -22,7 +22,7 @@ const Sidebar = ({ menuItem, isOpen, handleSidebarToggle }: Sidebar) => {
                             <X className="h-6 w-6" color="#ffffff"/>
                         </button>
                     </div>
-                    <ul className="pt-2 flex flex-col">
+                    <ul className="pt-2 flex flex-col pb-2 border-b border-b-zinc-600">
                         {menuItem.map((item, index) => (
                             <li key={index}>
                                 <NavLink 
@@ -51,6 +51,14 @@ const Sidebar = ({ menuItem, isOpen, handleSidebarToggle }: Sidebar) => {
                             </li>
                         ))}
                     </ul>
+                    <Link 
+                        onClick={handleSidebarToggle}
+                        to={'/watchlist'} 
+                        className="flex items-center gap-2 pt-2 px-2 group"
+                    >
+                        <TvMinimalPlay className="h-6 w-6" color="#ffffff"/>
+                        <span className="text-zinc-400 font-semibold group-hover:text-white">Watchlist</span>
+                    </Link>
                 </div>
             </div>
         </>
