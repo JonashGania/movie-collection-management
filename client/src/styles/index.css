@@ -158,4 +158,22 @@
   .sidebar{
     width: 250px;
   }
+  .modal-container{
+    max-width: 320px;
+    padding: 1rem;
+  }
+
+  .delete-modal-container{
+    max-width: 350px;
+  }
+
+  .tabs-trigger{
+    padding: 0.2rem 0rem;
+  }
+  .details-form-wrap{
+    flex-direction: column;
+  }
+  .details-form-wrap .item{
+    width: 100%;
+  }
 }
