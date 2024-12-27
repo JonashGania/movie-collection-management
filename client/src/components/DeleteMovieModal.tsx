@@ -45,7 +45,7 @@ const DeleteMovieModal = ({ movieId }: { movieId: string | undefined}) => {
     }
 
     return (
-        <DialogContent className="max-w-md w-full px-8">
+        <DialogContent className="delete-modal-container max-w-md w-full px-8">
             <DialogHeader>
                 <DialogTitle className="text-xl text-black">Confirm Delete</DialogTitle>
             </DialogHeader>

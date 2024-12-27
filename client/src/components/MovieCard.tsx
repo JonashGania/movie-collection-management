@@ -32,18 +32,24 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 to={`/movies/${movie.slug}`} 
                 className="relative w-full"
             >
-                {movie.poster_url ? (
-                    <div className="movie-image aspect-[2/3] overflow-hidden">
-                        <img 
-                            src={movie.poster_url} 
-                            alt={`${movie.title} poster`} 
-                            className="w-full h-full object-cover rounded-t-md"
-                        />
-                    </div>
-                    
-                ) : (
-                    <div>No image available</div>
-                )}
+                    {movie.poster_url !== 'N/A' ? (
+                        <div className="movie-image aspect-[2/3] overflow-hidden">
+                            <img 
+                                src={movie.poster_url} 
+                                alt={`${movie.title} poster`} 
+                                className="w-full h-full object-cover rounded-t-md"
+                            />  
+                        </div>
+   
+                    ) : (
+                        <div className="aspect-[2/3] overflow-hidden">
+                            <img 
+                                src="/blank-poster.jpg" 
+                                alt="blank poster image" 
+                                className="w-full h-full object-cover rounded-t-md"
+                            />  
+                        </div>
+                    )}
                 <div className="absolute w-full h-full top-0 left-0 hover:bg-[rgba(41,41,41,0.1)]"></div>
             </Link>
             <div className="flex justify-between gap-2 pt-2 sm:pt-4 px-2">

@@ -4,7 +4,7 @@ import GenresWrapper from "./GenresWrapper"
 
 const GenresPage = () => {
 
-    const {data, isError, isLoading} = useQuery({
+    const {data} = useQuery({
         queryKey: ['genres'],
         queryFn: () => getAllGenres() 
     })

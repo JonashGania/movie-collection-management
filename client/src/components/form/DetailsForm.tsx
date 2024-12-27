@@ -22,8 +22,8 @@ const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProp
                     onChange={(e) => handleSetField('title', e.target.value)}
                 />
             </div>
-            <div className="flex items-center gap-4">
-                <div className="w-[50%]">
+            <div className="details-form-wrap flex items-center gap-4">
+                <div className="flex-1 item">
                     <Label htmlFor="release-date">Release Date</Label>
                     <Input 
                         type="text"
@@ -36,7 +36,7 @@ const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProp
                         onChange={(e) => handleSetField('release_date', e.target.value)}
                     />
                 </div>
-                <div className="w-[50%]">
+                <div className="flex-1 item">
                     <Label htmlFor="rating">IMDB Rating</Label>
                     <Input 
                         type="number"
@@ -51,7 +51,7 @@ const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProp
                         onChange={(e) => handleSetField('rating', parseFloat(e.target.value))}
                     />
                 </div>
-                <div className="w-[50%]">
+                <div className="flex-1 item">
                     <Label htmlFor="duration">Duration</Label>
                     <Input 
                         type="number"

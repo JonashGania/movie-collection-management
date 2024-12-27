@@ -1,17 +1,23 @@
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getAllMoviesbyGenre } from "@/api"
 import MovieWrapper from "@/components/MovieWrapper"
 import NewMovieButton from "@/components/NewMovieButton"
 
 const GenreMoviesPage = () => {
     const { genreId } = useParams<{ genreId: string }>();
+    const navigate = useNavigate();
 
-    const { data } = useQuery({
+    const { data, error } = useQuery({
         queryKey: ['genreMovies', genreId],
         queryFn: () => getAllMoviesbyGenre(genreId),
         enabled: !!genreId
     })
+
+    // if (error) {
+    //     navigate('/error')
+    //     return null
+    // }
 
     return (
         <section className="max-w-7xl mx-auto w-full px-4 pb-12">
@@ -26,10 +32,12 @@ const GenreMoviesPage = () => {
                     </div>
                     <NewMovieButton />
                 </div>
-                {!data ? (
-                    <p className="text-white text-xl text-center">No movies available in this genre.</p>
-                ) :  (
-                    <MovieWrapper movies={data}/>
+                {data && (
+                    data.movies.length === 0 ? (
+                        <p className="text-white text-xl text-center">No movies available in this genre.</p>
+                    ) : (
+                        <MovieWrapper movies={data}/>
+                    )
                 )}
             </div>
         </section>

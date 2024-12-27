@@ -30,7 +30,8 @@ const ActorsForm = ({ actors, handleSetActors }: ActorsFormProps) => {
                             id={`actor-${index}`}
                             type="text"
                             value={actor} 
-                            placeholder="name" 
+                            placeholder="name"
+                            autoComplete="off" 
                             onChange={(e) => onChangeActors(index, e.target.value)}
                             className="py-5"
                         />

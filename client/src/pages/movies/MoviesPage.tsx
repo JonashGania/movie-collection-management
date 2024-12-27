@@ -1,18 +1,23 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
 import { getAllMovies } from "../../api";
 import { Skeleton } from "@/components/ui/skeleton";
 import MovieWrapper from "../../components/MovieWrapper";
 import PaginationComponent from "@/components/PaginationComponent";
 import NewMovieButton from "@/components/NewMovieButton";
+import { useSearchParams } from "react-router-dom";
 
 const MoviesPage = () => {
-    const [page, setPage] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = parseInt(searchParams.get('page') || '1', 10);
 
     const {data, isLoading} = useQuery({
         queryKey: ['movies', page],
         queryFn: () => getAllMovies(String(page))
     })
+
+    const handlePageChange = (newPage: number) => {
+        setSearchParams({ page: String(newPage) });
+    }
 
     return (
         <section className="max-w-7xl w-full mx-auto px-4 pb-12">
@@ -25,7 +30,7 @@ const MoviesPage = () => {
                     <NewMovieButton />
                 </div>
                 {isLoading ? (
-                    <div className="skeleton-movies-wrapper">
+                    <div className="skeleton-movies-wrapper pt-8">
                         {Array.from({ length: 10 }).map((_, index) => (
                             <Skeleton key={index} className="w-full h-[450px] round-md bg-zinc-800"/>
                         ))}
@@ -37,7 +42,7 @@ const MoviesPage = () => {
                             <PaginationComponent 
                                 totalPages={data.totalPages} 
                                 currentPage={page} 
-                                onPageChange={setPage}
+                                onPageChange={handlePageChange}
                             />
                         </>
                     )

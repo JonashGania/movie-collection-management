@@ -46,6 +46,8 @@ const MovieDetailsPage = () => {
         }
     }
 
+    console.log(data);
+
     return (
         <section className="max-w-7xl mx-auto w-full py-12 px-4">
             {isLoading ? (
@@ -82,11 +84,20 @@ const MovieDetailsPage = () => {
 
                     <div className="flex w-full pt-4 gap-4">
                         <div className="w-[25%] min-w-[100px] sm:min-w-[150px] relative">
-                            <img 
-                                src={`${data.poster_url}`} 
-                                alt={`${data.title} poster`} 
-                                className="w-full max-h-[420px] rounded-md"
-                            />
+                            {data.poster_url !== 'N/A' ? (
+                                <img 
+                                    src={`${data.poster_url}`} 
+                                    alt={`${data.title} poster`} 
+                                    className="w-full max-h-[420px] rounded-md"
+                                />
+                            ) : (
+                                <img 
+                                    src="/blank-poster.jpg" 
+                                    alt="blank poster image" 
+                                    className="w-full max-h-[420px] rounded-md object-cover"
+                                />
+                            )}
+
                         </div>
                         <div className="flex-grow flex flex-col justify-between gap-4">
                             <div>

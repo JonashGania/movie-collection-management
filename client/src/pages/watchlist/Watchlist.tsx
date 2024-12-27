@@ -20,11 +20,20 @@ const Watchlist = () => {
                             <li key={movie.id} className="flex flex-col w-full py-4 border-b last:border-b-0 border-zinc-gray-300">
                                 <div className="flex w-full items-center">
                                     <div className="w-20 mr-4">
-                                        <img 
-                                            className="w-full max-h-[100px] min-w-[75px] object-cover rounded-md" 
-                                            src={movie.poster_url} 
-                                            alt={`${movie.title} Poster`} 
-                                        />
+                                        {movie.poster_url !== 'N/A' ? (
+                                            <img 
+                                                className="w-full max-h-[100px] min-w-[75px] object-cover rounded-md" 
+                                                src={movie.poster_url} 
+                                                alt={`${movie.title} Poster`} 
+                                            />
+                                        ) : (
+                                            <img 
+                                                className="w-full max-h-[100px] min-w-[75px] object-cover rounded-md" 
+                                                src='/blank-poster.jpg'
+                                                alt='blank poster image'
+                                            />
+                                        )}
+                         
                                     </div>
                                     <div className="w-full flex flex-col">
                                         <div>
