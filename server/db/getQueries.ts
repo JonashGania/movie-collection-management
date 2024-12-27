@@ -1,5 +1,6 @@
 import { pool } from "./pool.js";
 import { formatTitle } from "../utils/formatTitle.js";
+import { QueryMoviesByGenreResult } from "../types/index.js";
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 
@@ -62,14 +63,24 @@ export const getGenres = async() => {
     }
 };
 
-export const queryMoviesByGenre = async(slug: string, page: number) => {
+export const queryMoviesByGenre = async(slug: string, page: number): Promise<QueryMoviesByGenreResult> => {
     const limit = 30;
     const offset = (page - 1) * limit;
 
     try {
+        const genreResult = await pool.query(`
+            SELECT name FROM genres WHERE slug = $1;`,
+            [slug]
+        )
+
+        if (genreResult.rows.length === 0) {
+            return { genreExist: false, genreName: null, movies: [] }
+        }
+
+        const genreName = genreResult.rows[0].name;
+
         const { rows } = await pool.query(`
             SELECT 
-                g.name AS genre_name,
                 m.id, m.title, m.release_date, m.rating, m.slug, mi.poster_url,
                 COUNT(*) OVER() AS total_count
             FROM genres g
@@ -81,10 +92,10 @@ export const queryMoviesByGenre = async(slug: string, page: number) => {
             [slug, limit, offset]
         );
 
-        return rows.length > 0 ? rows : [];
+        return {genreExist: true, genreName, movies: rows }
     } catch (error) {
         console.error('Error fetching movies by genre with posters', error);
-        return [];
+        throw error
     }
 }
 
