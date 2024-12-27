@@ -6,11 +6,13 @@ import GenresPage from "@/pages/genres/GenresPage"
 import GenreMoviesPage from "@/pages/moviesByGenres/GenreMoviesPage"
 import MovieDetailsPage from "@/pages/movieDetails/MovieDetailsPage"
 import Watchlist from "@/pages/watchlist/Watchlist"
+import ErrorPage from "@/pages/error/ErrorPage"
 
 export const router = createBrowserRouter([
     {
       path: '/',
       element: <Root />,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: '/',
@@ -37,5 +39,9 @@ export const router = createBrowserRouter([
           element: <Watchlist />
         }
       ]
+    },
+    {
+      path: '/error',
+      element: <ErrorPage />,
     }
   ])
