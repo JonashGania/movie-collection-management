@@ -4,7 +4,7 @@ import DeleteMovieModal from "./DeleteMovieModal"
 const DeleteButton = ({ movieId }: {movieId: string | undefined}) => {
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
                 <button className="px-6 py-1 bg-red-600 hover:bg-red-500 rounded-3xl text-base sm:text-lg text-white font-medium"
                 >
                     Delete
