@@ -10,7 +10,6 @@ export interface GenreMovies {
 }
 
 export interface QueryMoviesByGenreResult {
-    genreExist: boolean;
     genreName: string | null;
     movies: GenreMovies[]
 }
