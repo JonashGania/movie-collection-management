@@ -10,7 +10,7 @@ interface EditButtonProps {
 const EditButton = ({ movieData, movieId }: EditButtonProps) => {
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
                 <button className="px-6 py-1 bg-gray-300 hover:bg-white rounded-3xl text-base sm:text-lg font-medium"
                 >
                     Edit
