@@ -63,7 +63,7 @@ export const getGenres = async() => {
     }
 };
 
-export const queryMoviesByGenre = async(slug: string, page: number): Promise<QueryMoviesByGenreResult> => {
+export const queryMoviesByGenre = async(slug: string, page: number): Promise<QueryMoviesByGenreResult | null> => {
     const limit = 30;
     const offset = (page - 1) * limit;
 
@@ -72,10 +72,6 @@ export const queryMoviesByGenre = async(slug: string, page: number): Promise<Que
             SELECT name FROM genres WHERE slug = $1;`,
             [slug]
         )
-
-        if (genreResult.rows.length === 0) {
-            return { genreExist: false, genreName: null, movies: [] }
-        }
 
         const genreName = genreResult.rows[0].name;
 
@@ -92,10 +88,10 @@ export const queryMoviesByGenre = async(slug: string, page: number): Promise<Que
             [slug, limit, offset]
         );
 
-        return {genreExist: true, genreName, movies: rows }
+        return { genreName, movies: rows }
     } catch (error) {
         console.error('Error fetching movies by genre with posters', error);
-        throw error
+        return null
     }
 }
 
