@@ -21,12 +21,14 @@ export const getMoviesByGenres = async (req: Request, res:Response) => {
     }
 
     try {
-        const {genreExist, genreName, movies } = await queryMoviesByGenre(slug, page);
+        const result = await queryMoviesByGenre(slug, page);
 
-        if (!genreExist) {
-            res.status(404).json({ message: "Genre slug not found" });
+        if (!result) {
+            res.status(404).json({ message: "Found no movies for this genre" });
             return;
         }
+
+        const { genreName, movies } = result
 
         if (movies.length === 0) {
             res.status(200).json({ 
