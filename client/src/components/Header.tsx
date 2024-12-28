@@ -27,8 +27,10 @@ const Header = () => {
 
     return (
         <header className="w-full">
-            <nav className="max-w-7xl h-[100px] mx-auto px-4 flex items-center justify-between">
-                <h1 className="text-cyan-300 text-xl font-semibold">Movie Collection</h1>
+            <nav className="max-w-7xl h-[70px] sm:h-[100px] mx-auto px-4 flex items-center justify-between">
+                <Link to={'/'}>
+                    <img src="/logo.svg" alt="logo" className="h-[50px] w-[50px] sm:w-full sm:h-full"/>
+                </Link>
                 <div className="hidden sm:flex items-center ">
                     <ul className="flex items-center gap-8 text-zinc-200 text-lg font-medium pr-3">
                         {links.map((item, index) => (

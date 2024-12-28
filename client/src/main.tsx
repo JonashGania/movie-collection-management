@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { router } from './route/router'
 import { Toaster } from './components/ui/toaster'
+import { HelmetProvider } from 'react-helmet-async'
 import './styles/index.css'
 
 const queryClient = new QueryClient({
@@ -14,13 +15,25 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     }
   },
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (query?.meta?.navigate) {
+        const navigate = query.meta.navigate;
+        if ((error as any).response?.status === 404) {
+          navigate('/error'); 
+        }
+      }
+    }
+  })
 })
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <RouterProvider router={router}/>
+      <HelmetProvider>
+        <Toaster />
+        <RouterProvider router={router}/>
+      </HelmetProvider>
     </QueryClientProvider>
   </StrictMode>,
 )
