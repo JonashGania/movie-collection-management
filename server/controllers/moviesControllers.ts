@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express"
-import { getMoviesPaginated, getMoviePoster, queryMovieDetails } from "../db/getQueries.js"
-import { createMovieQuery } from "../db/postQueries.js";
-import { queryDeleteMovie } from "../db/deleteQueries.js";
-import { updateMovieQuery } from "../db/updateQueries.js";
+import { getMoviesPaginated, getMoviePoster, queryMovieDetails } from "../db/queries/getQueries.js"
+import { createMovieQuery } from "../db/queries/postQueries.js";
+import { queryDeleteMovie } from "../db/queries/deleteQueries.js";
+import { updateMovieQuery } from "../db/queries/updateQueries.js";
 import { movieTitleSlug } from "../utils/generateSlug.js";
 import { fetchMoviePoster } from "../utils/fetchMoviePoster.js";
 
@@ -101,7 +101,7 @@ export const createMovies = async (req: Request, res: Response, next: NextFuncti
         res.status(201).send("Movie created successfully.");
     } catch (error) {
         console.error('Error creating movie', error)
-        res.status(500).send("An error occured while creating the movie")
+        res.status(500).json({ error: "An error occured while creating the movie" })
     }
 }
 
@@ -113,8 +113,6 @@ export const deleteMovie = async (req: Request, res: Response, next: NextFunctio
 
         res.status(200).json({ message: "Movie successfully deleted" })
     } catch (error: any) {
-        console.error('Error deleting movie', error)
-
         if (error.message.includes("Not found")) {
             res.status(404).json({ error: "Movie not found" })
         } else {
