@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
-import { getWatchlistsQuery } from "../db/getQueries.js"
-import { addMovieWatchlistQuery } from "../db/postQueries.js";
-import { removeMovieWatchlistQuery } from "../db/deleteQueries.js";
+import { getWatchlistsQuery } from "../db/queries/getQueries.js"
+import { addMovieWatchlistQuery } from "../db/queries/postQueries.js";
+import { removeMovieWatchlistQuery } from "../db/queries/deleteQueries.js";
 
 export const getAllWatchlist = async (req: Request, res: Response, next: NextFunction) => {
     try {
