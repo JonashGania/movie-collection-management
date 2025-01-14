@@ -3,7 +3,7 @@ import { getAllGenres, getMoviesByGenres } from '../controllers/genresController
 
 const genresRouter = express.Router();
 
-genresRouter.get('/genres', getAllGenres);
-genresRouter.get('/genres/:genreId', getMoviesByGenres)
+genresRouter.get('/', getAllGenres);
+genresRouter.get('/:genreId', getMoviesByGenres)
 
 export default genresRouter

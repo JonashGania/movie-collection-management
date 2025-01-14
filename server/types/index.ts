@@ -13,3 +13,9 @@ export interface QueryMoviesByGenreResult {
     genreName: string | null;
     movies: GenreMovies[]
 }
+
+export interface User {
+    id: string;
+    username: string;
+    password: string
+}

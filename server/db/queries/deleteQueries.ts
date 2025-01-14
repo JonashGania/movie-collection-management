@@ -1,4 +1,4 @@
-import { pool } from "../pool.js"
+import { pool } from "../../config/dbConnect.js"
 
 export const queryDeleteMovie = async (slug: string) => {
     const client = await pool.connect();

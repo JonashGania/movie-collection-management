@@ -1,4 +1,4 @@
-import { pool } from "../pool.js";
+import { pool } from "../../config/dbConnect.js";
 import { formatTitle } from "../../utils/formatTitle.js";
 import { QueryMoviesByGenreResult } from "../../types/index.js";
 import axios from 'axios';

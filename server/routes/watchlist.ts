@@ -3,8 +3,8 @@ import { addToWatchlist, getAllWatchlist, removeFromWatchlist } from '../control
 
 const watchlistRouter = express.Router();
 
-watchlistRouter.get('/watchlist', getAllWatchlist);
-watchlistRouter.post('/watchlist/:movieId', addToWatchlist);
-watchlistRouter.delete('/watchlist/:movieId', removeFromWatchlist);
+watchlistRouter.get('/', getAllWatchlist);
+watchlistRouter.post('/:movieId', addToWatchlist);
+watchlistRouter.delete('/:movieId', removeFromWatchlist);
 
 export default watchlistRouter

@@ -3,10 +3,10 @@ import { getAllMoviesPaginated, createMovies, getMovieDetails, deleteMovie, upda
 
 const moviesRouter = express.Router();
 
-moviesRouter.get('/movies', getAllMoviesPaginated);
-moviesRouter.get('/movies/:movieId', getMovieDetails);
-moviesRouter.post('/movies', createMovies);
-moviesRouter.delete('/movies/:movieId', deleteMovie);
-moviesRouter.put('/movies/:movieId', updateMovie);
+moviesRouter.get('/', getAllMoviesPaginated);
+moviesRouter.get('/:movieId', getMovieDetails);
+moviesRouter.post('/', createMovies);
+moviesRouter.delete('/:movieId', deleteMovie);
+moviesRouter.put('/:movieId', updateMovie);
 
 export default moviesRouter;
