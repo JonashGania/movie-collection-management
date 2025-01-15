@@ -5,6 +5,7 @@ import passport from 'passport';
 import cors from 'cors';
 import router from './routes/index.js';
 import { pool } from './config/dbConnect.js';
+import { limiter } from './middlewares/rateLimiter.js';
 import * as dotenv from 'dotenv';
 import './config/local-strategy.js'
 
@@ -15,7 +16,10 @@ const PORT = process.env.PORT || 8000;
 
 const pgSession = connectPgSimple(session);
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,18 +27,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     store: new pgSession({
         pool: pool,
-        tableName: 'session'
+        tableName: 'Session'
     }),
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
+        httpOnly: true,
+        sameSite: 'strict',
         maxAge: 1000 * 60 * 60 * 24     // 1 day
     }
 }))
 
 app.use(passport.session());
 
+app.use('/api', limiter);
 app.use('/api', router);
 
 app.listen(PORT, () => {

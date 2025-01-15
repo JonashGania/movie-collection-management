@@ -14,11 +14,19 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
             status: 201,
             message: "User created successfully."
         })
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating user', error)
-        res.status(500).json({
-            status: 500,
-            message: "An error occured while creating a user" 
-        })
+
+        if (error.code === 'P2002' && error.meta?.target.includes('username')) {
+            res.status(409).json({
+                status: 409,
+                message: "Username is already taken."
+            })
+        } else {
+            res.status(500).json({
+                status: 500,
+                message: "An error occured while creating a user" 
+            })
+        }
     }
 }

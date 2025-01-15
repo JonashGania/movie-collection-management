@@ -9,6 +9,8 @@ interface MovieDetailsFormProps {
 }
 
 const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProps) => {
+
+
     return (
         <div className="flex flex-col gap-4">
             <div>

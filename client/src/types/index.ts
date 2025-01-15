@@ -64,3 +64,8 @@ export interface WatchlistMovieDetails {
     slug: string,
     poster_url: string
 }
+
+export interface AuthData {
+    username: string,
+    password: string
+}
