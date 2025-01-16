@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
 import HomePage from "./pages/home/HomePage";
 import MoviesPage from "./pages/movies/MoviesPage"
 import GenresPage from "./pages/genres/GenresPage"
@@ -18,6 +19,7 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/sign-in" element={<SignIn />}/>
+                    <Route path="/sign-up" element={<SignUp />}/>
                     <Route element={<Root />}>
                         <Route element={<ProtectedRoutes />}>
                             <Route path="/" element={<HomePage />}/>
@@ -29,7 +31,7 @@ const App = () => {
                         </Route>
                     </Route>
                     <Route path="/error" element={<ErrorPage />} />
-                    <Route path="*" element={<ErrorPage />} />
+                    {/* <Route path="*" element={<ErrorPage />} /> */}
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
