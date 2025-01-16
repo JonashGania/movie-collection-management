@@ -5,6 +5,7 @@ import axiosInstance from "@/utils/axiosInstance";
 interface AuthContextProps {
     isAuthenticated: boolean;
     signIn: (signInData: AuthData) => Promise<void>;
+    signUp: (signUpData: AuthData) => Promise<void>;
     setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -40,21 +41,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const signIn = async (signInData: AuthData) => {
         try {
             const response =  await axiosInstance.post('/login', signInData, { 
-                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
 
             setIsAuthenticated(true);
-        } catch (error) {
-            console.error('Error during sign-in', error)
+        } catch (error: any) {
             setIsAuthenticated(false);
+            throw error.response.data.message
+        }
+    }
+
+    const signUp = async (signUp: AuthData) => {
+        try {
+            const response =  await axiosInstance.post('/sign-up', signUp, { 
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+        } catch (error: any) {
+            throw error.response.data.message
         }
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, setIsAuthenticated }}>
+        <AuthContext.Provider value={{ isAuthenticated, signUp, signIn, setIsAuthenticated }}>
             {children}
         </AuthContext.Provider>
     )

@@ -43,7 +43,6 @@ model Movies {
 model Genres {
   id     String   @id @default(uuid())
   name   String   @unique @db.VarChar(255)
-  slug   String?  @unique @db.VarChar(255)
   movies Movies[] @relation("MovieGenres")
 }
 

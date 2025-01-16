@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express"
-import { getGenres, queryMoviesByGenre } from "../db/queries/getQueries.js"
+import { queryMoviesByGenre } from "../db/queries/getQueries.js"
+import { getGenres } from "../db/queries.js";
 
 export const getAllGenres = async (req: Request, res: Response) => {
     try {
@@ -7,7 +8,10 @@ export const getAllGenres = async (req: Request, res: Response) => {
         res.status(200).json(allGenres);
     } catch (error) {
         console.error('Error in getAllGenres controller', error);
-        res.status(500).json({ error: "An error occured while fetching genres." })
+        res.status(500).json({
+            status: 500,
+            message: "An error occured while fetching genres." 
+        })
     }
 }
 

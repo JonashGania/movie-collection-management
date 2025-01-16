@@ -47,7 +47,14 @@ const SignIn = () => {
                 })
                 setErrors(formattedErrors)
             } else {
-                setErrors({ submit: error.message })
+                const errorMessage = error.toString();
+                if (errorMessage.includes('Username does not exist.')) {
+                    setErrors({ username: errorMessage})
+                } else if (errorMessage.includes('Incorrect password.')) {
+                    setErrors({ password: errorMessage })
+                } else {
+                    setErrors({ submit: 'An unexpected error occured. Please try again.' });
+                }
             }
         } finally {
             setIsSubmitting(false)
@@ -78,7 +85,7 @@ const SignIn = () => {
                             onSubmit={handleSubmit}
                         >
                             <div className="flex flex-col w-full gap-4">
-                                <div className="flex flex-col">
+                                <div>
                                     <Label htmlFor="username" >Username</Label>
                                     <Input
                                         id="username"
@@ -93,9 +100,8 @@ const SignIn = () => {
                                     {errors.username && 
                                         <span className="text-red-500 font-medium text-sm pl-2">{errors.username}</span>
                                     }
-                                  
                                 </div>
-                                <div className="flex flex-col">
+                                <div>
                                     <Label htmlFor="password">Password</Label>
                                     <Input
                                         id="password"
@@ -116,6 +122,10 @@ const SignIn = () => {
                                 {isSubmitting ? 'Signing In...' : 'Sign In'}
                             </Button>
                         </form>
+                        <div className="pt-2 text-center">
+                            <span className="text-black text-sm">Don't have an account? </span>
+                            <a href="/sign-up" className="text-black font-semibold hover:underline text-sm">Sign up.</a>
+                        </div>
                     </CardContent>
                 </Card>
             </section>

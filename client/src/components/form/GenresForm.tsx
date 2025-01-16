@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllGenres } from "@/api";
 
 interface GenresFormProps {
-    selectedGenres: number[],
-    handleSetGenres: (genres: number[]) => void,
+    selectedGenres: string[],
+    handleSetGenres: (genres: string[]) => void,
 }
 
 const GenresForm = ({ selectedGenres, handleSetGenres }: GenresFormProps) => {
@@ -12,7 +12,7 @@ const GenresForm = ({ selectedGenres, handleSetGenres }: GenresFormProps) => {
         queryFn: () => getAllGenres() 
     })
 
-    const handleGenreSelect = (genreId: number) => {
+    const handleGenreSelect = (genreId: string) => {
         const updatedGenres = selectedGenres.includes(genreId) 
             ? selectedGenres.filter((g) => g !== genreId) 
             : [...selectedGenres, genreId]

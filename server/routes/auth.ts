@@ -26,6 +26,8 @@ authRouter.post('/login', (req, res, next) => {
                 return next(err);
             }
 
+            console.log(req.user);
+
             return res.json({ message: "Login successful" });
         })
     })(req, res, next);

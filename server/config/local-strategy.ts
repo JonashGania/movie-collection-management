@@ -1,9 +1,7 @@
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import { Strategy as LocalStrategy } from "passport-local";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "./prismaClient.js";
 
 declare global {
     namespace Express {
@@ -49,7 +47,7 @@ export default passport.use(
             const match = await bcrypt.compare(password, user.password);
 
             if (!match) {
-                return done(null, false, { message: "Incorrect Password." })
+                return done(null, false, { message: "Incorrect password." })
             }
 
             return done(null, user);

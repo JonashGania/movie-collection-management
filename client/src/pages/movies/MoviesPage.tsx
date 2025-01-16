@@ -20,6 +20,8 @@ const MoviesPage = () => {
         meta: { navigate }
     })
 
+    console.log(data);
+
     const handlePageChange = (newPage: number) => {
         setSearchParams({ page: String(newPage) });
     }
@@ -46,8 +48,7 @@ const MoviesPage = () => {
                                 <Skeleton key={index} className="w-full h-[450px] round-md bg-zinc-800"/>
                             ))}
                         </div>
-                    ) : (
-                        data && (
+                    ) : ( data && data.movies.length > 0 ? (
                             <>
                                 <MovieWrapper movies={data}/>
                                 <PaginationComponent 
@@ -56,6 +57,8 @@ const MoviesPage = () => {
                                     onPageChange={handlePageChange}
                                 />
                             </>
+                        ) : (
+                            <h1 className="text-gray-300 text-3xl font-medium text-center pt-20">No movies yet.</h1>
                         )
                     )}
                 </div>

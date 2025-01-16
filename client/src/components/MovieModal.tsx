@@ -62,7 +62,7 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
         dispatch({ type: 'SET_FIELD', field, value })
     }
 
-    const handleSetGenre = (genres: number[]) => {
+    const handleSetGenre = (genres: string[]) => {
         dispatch({ type: 'SET_GENRES', genres })
     }
 

@@ -1,10 +1,15 @@
+export interface MovieImages {
+    id: string,
+    posterUrl: string,
+}
+
 export interface Movies {
     id: number,
     title: string,
-    release_date: string,
+    releaseDate: string,
     rating: string,
     slug: string,
-    poster_url: string | null
+    movieImages: MovieImages
 }
 
 export interface MoviesPaginated {
@@ -13,9 +18,8 @@ export interface MoviesPaginated {
 }
 
 export interface Genres {
-    id: number,
+    id: string,
     name: string,
-    slug: string,
 }
 
 export interface GenreMovies {
@@ -31,14 +35,14 @@ export interface MovieFormState {
     description: string,
     duration: number,
     rating: number,
-    genres: number[],
+    genres: string[],
     actors: string[],
     directors: string[],
 }
 
 export type MovieFormAction =
     | { type: 'SET_FIELD', field: keyof MovieFormState, value: string | number | string[] | number[] }
-    | { type: 'SET_GENRES', genres: number[] }
+    | { type: 'SET_GENRES', genres: string[] }
     | { type: 'SET_DIRECTORS', directors: string[] }
     | { type: 'SET_ACTORS', actors: string[] }
     | { type: 'RESET' }

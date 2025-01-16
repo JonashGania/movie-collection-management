@@ -32,10 +32,10 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 to={`/movies/${movie.slug}`} 
                 className="relative w-full"
             >
-                    {movie.poster_url !== 'N/A' ? (
+                    {movie.movieImages.posterUrl !== 'N/A' ? (
                         <div className="movie-image aspect-[2/3] overflow-hidden">
                             <img 
-                                src={movie.poster_url} 
+                                src={movie.movieImages.posterUrl} 
                                 alt={`${movie.title} poster`} 
                                 className="w-full h-full object-cover rounded-t-md"
                             />  
@@ -60,7 +60,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                         /10
                     </h5>
                 </div>
-                <span className="text-yellow-300 text-xs">{formatYear(movie.release_date)}</span>
+                <span className="text-yellow-300 text-xs">{formatYear(movie.releaseDate)}</span>
             </div>
             <h5 className="pt-2 px-2 text-gray-100 font-semibold text-sm sm:text-lg leading-5 flex-grow">{movie.title}</h5>
             <div className="px-2 pt-4">
