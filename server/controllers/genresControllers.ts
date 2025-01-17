@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { queryMoviesByGenre } from "../db/queries/getQueries.js"
-import { getGenres } from "../db/queries.js";
+import { getGenres, getUserMoviesByGenre } from "../db/queries.js";
 
 export const getAllGenres = async (req: Request, res: Response) => {
     try {
@@ -18,21 +17,26 @@ export const getAllGenres = async (req: Request, res: Response) => {
 export const getMoviesByGenres = async (req: Request, res:Response) => {
     const page = parseInt(req.query.page as string) || 1;
     const slug = req.params.genreId;
+    const userId = req.user?.id;
 
     if (page < 1) {
-        res.status(400).json({ error: "Page number must be greater than 1"});
+        res.status(400).json({ 
+            status: 400,
+            message: "Page number must be greater than 1"
+        });
         return
     }
 
     try {
-        const result = await queryMoviesByGenre(slug, page);
+        const result = await getUserMoviesByGenre(userId, slug, page);
 
         if (!result) {
             res.status(404).json({ message: "Found no movies for this genre" });
             return;
         }
 
-        const { genreName, movies } = result
+        const { movies, totalCount, genreName } = result
+        const totalPages = Math.ceil(totalCount / 30);
 
         if (movies.length === 0) {
             res.status(200).json({ 
@@ -43,16 +47,17 @@ export const getMoviesByGenres = async (req: Request, res:Response) => {
             return;
         }
 
-
-        const totalMovies = movies[0]?.total_count || 0;
-        const totalPages = Math.ceil(totalMovies / 30);
-
-        const movieList = movies.map(({ total_count, ...movie }) => movie);
+        const allMovies = movies.map((movie) => {
+            if (movie.movieImages) {
+                const { movieId, ...restOfMovies } = movie.movieImages
+                return {...movie, movieImages: restOfMovies}
+            }
+        })
 
         res.status(200).json({ 
             totalPages, 
             genre: genreName,
-            movies: movieList, 
+            movies: allMovies, 
         });
     } catch (error) {
         console.error('Error in getMoviesByGenres controller', error);
