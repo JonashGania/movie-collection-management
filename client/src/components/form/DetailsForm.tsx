@@ -29,13 +29,13 @@ const MovieDetailsForm = ({ detailValues, handleSetField }: MovieDetailsFormProp
                     <Label htmlFor="release-date">Release Date</Label>
                     <Input 
                         type="text"
-                        value={detailValues.release_date} 
+                        value={detailValues.releaseDate} 
                         id="release-date" 
-                        name="release_date" 
+                        name="releaseDate" 
                         placeholder="YYYY-MM-DD" 
                         className="text-black py-5"
                         autoComplete="off"
-                        onChange={(e) => handleSetField('release_date', e.target.value)}
+                        onChange={(e) => handleSetField('releaseDate', e.target.value)}
                     />
                 </div>
                 <div className="flex-1 item">

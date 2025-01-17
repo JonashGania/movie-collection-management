@@ -12,7 +12,7 @@ interface MovieCardProps {
 const MovieCard = ({ movie }: MovieCardProps) => {
     const { watchlist, addMovieToWatchlist, removeMovieFromWatchlist, isAdding } = useWatchlist();
 
-    const isInWatchlist = watchlist.some((item) => item.id === movie.id);
+    const isInWatchlist = watchlist?.watchlist.some((item) => item.id === movie.id);
     const isAddingMovie = isAdding(movie.id);
 
     const handleWatchlistClick = () => {
@@ -62,7 +62,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
                 </div>
                 <span className="text-yellow-300 text-xs">{formatYear(movie.releaseDate)}</span>
             </div>
-            <h5 className="pt-2 px-2 text-gray-100 font-semibold text-sm sm:text-lg leading-5 flex-grow">{movie.title}</h5>
+            <h5 className="pt-2 px-2 text-gray-100 font-semibold text-sm sm:text-base leading-5 flex-grow">{movie.title}</h5>
             <div className="px-2 pt-4">
                 <button
                     onClick={handleWatchlistClick} 

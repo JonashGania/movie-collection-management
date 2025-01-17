@@ -20,8 +20,6 @@ const MoviesPage = () => {
         meta: { navigate }
     })
 
-    console.log(data);
-
     const handlePageChange = (newPage: number) => {
         setSearchParams({ page: String(newPage) });
     }

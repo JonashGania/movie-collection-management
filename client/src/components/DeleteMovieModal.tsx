@@ -51,7 +51,7 @@ const DeleteMovieModal = ({ movieId }: { movieId: string | undefined}) => {
             </DialogHeader>
             <p className="font-normal text-zinc-600 pb-8">Are you sure you want to delete this movie?</p>
             <DialogFooter>
-                <DialogClose>
+                <DialogClose asChild>
                     <Button className="bg-white text-black hover:bg-gray-200">Cancel</Button>
                 </DialogClose>
                 <Button 

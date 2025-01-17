@@ -2,10 +2,10 @@ import { MovieFormState, MovieFormAction } from "@/types"
 
 export const initialState = {
     title: '',
-    release_date: '',
+    releaseDate: '',
     description: '',
     duration: 0,
-    rating: 0,
+    rating: '',
     genres: [],
     directors: [''],
     actors: ['']

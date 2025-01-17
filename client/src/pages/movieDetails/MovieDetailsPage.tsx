@@ -30,8 +30,10 @@ const MovieDetailsPage = () => {
 
     const movieData = data ? {
             ...data,
-            release_date: formatDate(data.release_date),
-            genres: data.genres.map((genre: {genreId: number }) => genre.genreId)
+            releaseDate: formatDate(data.releaseDate),
+            genres: data.genres.map((genre: {id: string }) => genre.id),
+            actors: data.actors.map((actor: { actorName: string }) => actor.actorName),
+            directors: data.directors.map((director: { directorName: string }) => director.directorName)
         }
     : undefined;
 
@@ -40,7 +42,7 @@ const MovieDetailsPage = () => {
         return <h2>No details</h2>
     }
 
-    const isInWatchlist = watchlist.some((item) => item.id === data.id);
+    const isInWatchlist = watchlist?.watchlist.some((item) => item.id === data.id);
     const isAddingMovie = isAdding(data.id);
 
     const handleWatchlistClick = () => {
@@ -54,7 +56,7 @@ const MovieDetailsPage = () => {
     return (
         <>
             <Helmet>
-                <title>{`${data.title} (${formatYear(data.release_date)})`}</title>
+                <title>{`${data.title} (${formatYear(data.releaseDate)})`}</title>
                 <meta name="description" content={`${data.description}`}/>
             </Helmet>
             <section className="max-w-7xl mx-auto w-full py-12 px-4">
@@ -68,7 +70,7 @@ const MovieDetailsPage = () => {
                                 <ul className="flex items-center">
                                     <li className="flex items-center gap-2 pr-2">
                                         <CalendarDays className="h-4 w-4" color="#67e8f9"/>
-                                        <span className="text-white">{formatYear(data.release_date)}</span>
+                                        <span className="text-white">{formatYear(data.releaseDate)}</span>
                                     </li>
                                     <li className="flex items-center pl-2 gap-2 border-l-2 border-zinc-600 ">
                                         <Clock className="h-4 w-4" color="#67e8f9"/>
@@ -92,9 +94,9 @@ const MovieDetailsPage = () => {
 
                         <div className="flex w-full pt-4 gap-4">
                             <div className="w-[25%] min-w-[100px] sm:min-w-[150px] relative">
-                                {data.poster_url !== 'N/A' ? (
+                                {data.movieImages.posterUrl !== 'N/A' ? (
                                     <img 
-                                        src={`${data.poster_url}`} 
+                                        src={`${data.movieImages.posterUrl}`} 
                                         alt={`${data.title} poster`} 
                                         className="w-full max-h-[420px] rounded-md"
                                     />
@@ -112,11 +114,11 @@ const MovieDetailsPage = () => {
                                     <div className="flex items-center flex-wrap gap-2 sm:gap-4 pb-2">
                                         {data.genres.map((genre) => (
                                             <Link
-                                                to={`/genres/${genre.genreSlug}`}
-                                                key={genre.genreId} 
+                                                to={`/genres/${genre.slug}`}
+                                                key={genre.id} 
                                                 className="text-cyan-500 font-medium px-4 py-1 text-sm sm:text-base bg-[rgba(90,115,146,0.2)] rounded-2xl"
                                             >
-                                                {genre.genreName}
+                                                {genre.name}
                                             </Link>
                                         ))}
                                     </div>
@@ -124,16 +126,16 @@ const MovieDetailsPage = () => {
                                     <div className="hidden sm:flex flex-wrap py-3 border border-l-transparent border-r-transparent border-t-zinc-600 border-b-zinc-600">
                                         <span className="text-white font-semibold">Director</span>
                                         <ul className="flex items-center">
-                                            {data.directors.map((director, index) => (
-                                                <li key={index} className="pl-2 text-yellow-400 font-medium ">{director}</li>
+                                            {data.directors.map((director) => (
+                                                <li key={director.id} className="pl-2 text-yellow-400 font-medium ">{director.directorName}</li>
                                             ))}
                                         </ul>
                                     </div>
                                     <div className="hidden sm:flex gap-2 py-3 border border-l-transparent border-r-transparent border-transparent border-b-zinc-600">
                                         <span className="text-white font-semibold">Stars</span>
                                         <ul className="flex items-center flex-wrap">
-                                            {data.actors.map((actor, index) => (
-                                                <li key={index} className="pl-2 text-yellow-400 font-medium ">{actor}</li>
+                                            {data.actors.map((actor) => (
+                                                <li key={actor.id} className="pl-2 text-yellow-400 font-medium ">{actor.actorName}</li>
                                             ))}
                                         </ul>
                                     </div>
@@ -179,16 +181,16 @@ const MovieDetailsPage = () => {
                             <div className="flex flex-wrap py-3 border border-l-transparent border-r-transparent border-t-zinc-600 border-b-zinc-600">
                                 <span className="text-white font-semibold">Director</span>
                                 <ul className="flex items-center">
-                                    {data.directors.map((director, index) => (
-                                        <li key={index} className="pl-2 text-yellow-400 font-medium ">{director}</li>
+                                    {data.directors.map((director) => (
+                                        <li key={director.id} className="pl-2 text-yellow-400 font-medium ">{director.directorName}</li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="flex gap-2 py-3 border border-l-transparent border-r-transparent border-transparent border-b-zinc-600">
                                 <span className="text-white font-semibold">Stars</span>
                                 <ul className="flex items-center flex-wrap">
-                                    {data.actors.map((actor, index) => (
-                                        <li key={index} className="pl-2 text-yellow-400 font-medium ">{actor}</li>
+                                    {data.actors.map((actor) => (
+                                        <li key={actor.id} className="pl-2 text-yellow-400 font-medium ">{actor.actorName}</li>
                                     ))}
                                 </ul>
                             </div>

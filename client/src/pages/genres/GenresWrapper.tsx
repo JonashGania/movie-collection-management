@@ -6,16 +6,12 @@ interface GenresWrapperProps {
 }
 
 const GenresWrapper = ({ genres }: GenresWrapperProps) => {
-    const formatGenre = (genre: string) => {
-        return genre.toLowerCase().replace(/\s+/g, '-');
-    }
-
     return (
         <div className="pt-8">
             <div className="genres-wrapper w-full">
                 {genres.map(genre => (
                     <Link 
-                        to={`/genres/${formatGenre(genre.name)}`} 
+                        to={`/genres/${genre.slug}`} 
                         key={genre.id} 
                         className="rounded-md bg-[#1f2833] flex flex-col w-full"
                     >

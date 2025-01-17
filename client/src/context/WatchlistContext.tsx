@@ -1,14 +1,14 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { postAddToWatchlist, getWatchlist, removeFromWatchlist } from "@/api";
-import { WatchlistMovieDetails } from "@/types";
+import { Watchlist } from "@/types";
 
 interface WatchlistContextProps {
-    watchlist: WatchlistMovieDetails[],
+    watchlist: Watchlist | undefined,
     isLoading: boolean, 
-    isAdding: (movieId: number) => boolean,
-    addMovieToWatchlist: (movieId: number) => void,
-    removeMovieFromWatchlist: (movieId: number) => void,
+    isAdding: (movieId: string) => boolean,
+    addMovieToWatchlist: (movieId: string) => void,
+    removeMovieFromWatchlist: (movieId: string) => void,
 }
 
 const WatchlistContext = createContext<WatchlistContextProps | undefined>(undefined);
@@ -24,17 +24,17 @@ export const useWatchlist = () => {
 }
 
 export const WatchlistProvider = ({ children }: { children: ReactNode }) => {
-    const [loadingMovies, setLoadingMovies] = useState<Record<number, boolean>>({})
+    const [loadingMovies, setLoadingMovies] = useState<Record<string, boolean>>({})
     const queryClient = useQueryClient();
 
-    const { data: watchlist = [], isLoading } = useQuery({
+    const { data: watchlist, isLoading } = useQuery({
         queryKey: ['watchlist'],
-        queryFn: getWatchlist
+        queryFn: getWatchlist,
     })
 
     const { mutate: addToWatchlistMutation } = useMutation({
         mutationFn: postAddToWatchlist,
-        onMutate: (movieId: number) => {
+        onMutate: (movieId: string) => {
             setLoadingMovies((prev) => ({...prev, [movieId]: true }));
         },
         onSuccess: () => {
@@ -51,7 +51,7 @@ export const WatchlistProvider = ({ children }: { children: ReactNode }) => {
 
     const { mutate: removeFromWatchlistMutation} = useMutation({
         mutationFn: removeFromWatchlist,
-        onMutate: (movieId: number) => {
+        onMutate: (movieId: string) => {
             setLoadingMovies((prev) => ({ ...prev, [movieId]: true }));
         },
         onSuccess: () => {
@@ -66,15 +66,15 @@ export const WatchlistProvider = ({ children }: { children: ReactNode }) => {
         },
     })
 
-    const addMovieToWatchlist = (movieId: number) => {
+    const addMovieToWatchlist = (movieId: string) => {
         addToWatchlistMutation(movieId);
     }
 
-    const removeMovieFromWatchlist = (movieId: number) => {
+    const removeMovieFromWatchlist = (movieId: string) => {
         removeFromWatchlistMutation(movieId);
     }
 
-    const isAdding = (movieId: number) => !!loadingMovies[movieId]
+    const isAdding = (movieId: string) => !!loadingMovies[movieId]
 
     return (
         <WatchlistContext.Provider 

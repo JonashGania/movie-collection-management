@@ -21,8 +21,9 @@ const Watchlist = () => {
                 </div>
                 <div className="mt-8 w-full bg-white flex-grow">
                     <div className="max-w-7xl mx-auto w-full px-4 py-8">
-                        <ul className="flex flex-col px-4 py-2 max-w-2xl border border-gray-300 rounded-md">
-                            {watchlist.map((movie) => (
+                    {watchlist && watchlist.watchlist.length > 0 ? 
+                        (<ul className="flex flex-col px-4 py-2 max-w-2xl border border-gray-300 rounded-md">
+                            {watchlist.watchlist.map((movie) => (
                                 <li key={movie.id} className="flex flex-col w-full py-4 border-b last:border-b-0 border-zinc-gray-300">
                                     <div className="flex w-full items-center">
                                         <div className="w-20 mr-4">
@@ -61,6 +62,10 @@ const Watchlist = () => {
                                 </li>
                             ))}
                         </ul>
+                        ) : (
+                            <h1 className="text-black font-medium text-lg">Your Watchlist is empty.</h1>
+                        )
+                    }
                     </div>
                 </div>
             </section>

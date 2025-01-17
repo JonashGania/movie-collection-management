@@ -18,11 +18,12 @@ const GenreMoviesPage = () => {
         meta: { navigate }
     })
 
+    console.log(data);
 
     return (
         <>
             <Helmet>
-                <title>{`${data?.genre }`} - Genre</title>
+                <title>{`${data?.genre.name }`} - Genre</title>
                 <meta name="description" content={`Check out these ${data?.genre} movies`}/>
             </Helmet>
             <section className="max-w-7xl mx-auto w-full px-4 pb-12">
@@ -33,13 +34,13 @@ const GenreMoviesPage = () => {
                                 <div className="w-[5px] h-8 bg-cyan-300 rounded-lg"></div>
                                 <h1 className="font-bold text-2xl pl-2 text-white">Popular movies</h1>
                             </div>
-                            <h4 className="text-zinc-400 pt-2 font-medium text-lg">Trending in {data?.genre} movies</h4>           
+                            <h4 className="text-zinc-400 pt-2 font-medium text-lg">Trending in {data?.genre.name} movies</h4>           
                         </div>
                         <NewMovieButton />
                     </div>
                     {data && (
                         data.movies.length === 0 ? (
-                            <p className="text-white text-xl text-center">No movies available in this genre.</p>
+                            <h1 className="text-gray-300 text-3xl font-medium text-center pt-20">No movies on this genre yet.</h1>
                         ) : (
                             <MovieWrapper movies={data}/>
                         )

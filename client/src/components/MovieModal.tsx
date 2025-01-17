@@ -87,6 +87,7 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
 
             return
         }
+        console.log(state);
         mutation({ movieData: state, movieId: movieId })
     }
     
