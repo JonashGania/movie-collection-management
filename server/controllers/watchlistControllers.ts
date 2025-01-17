@@ -1,21 +1,29 @@
 import { Request, Response, NextFunction } from "express"
-import { getWatchlistsQuery } from "../db/queries/getQueries.js"
 import { addMovieWatchlistQuery } from "../db/queries/postQueries.js";
 import { removeMovieWatchlistQuery } from "../db/queries/deleteQueries.js";
+import { getUserWatchlistQuery } from "../db/queries.js";
 
 export const getAllWatchlist = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?.id
+
     try {
-        const movies = await getWatchlistsQuery();
+        const movies = await getUserWatchlistQuery(userId);
 
         if (!movies) {
-            res.status(500).json({ error: 'Failed to fetch the watchlist' });
+            res.status(500).json({ 
+                status: 500, 
+                error: 'Failed to fetch the watchlist' 
+            });
             return
         }
 
-        res.status(200).json(movies);
+        res.status(200).json({ watchlist: movies });
     } catch (error) {
         console.error('Error in getAllWatchlist controller', error);
-        res.status(500).json({ error: "An error occured while fetching watchlist" });
+        res.status(500).json({ 
+            status: 500, 
+            error: "An error occured while fetching watchlist" 
+        });
     }
 }
 
