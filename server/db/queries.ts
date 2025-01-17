@@ -1,7 +1,4 @@
 import { prisma } from "../config/prismaClient.js";
-import { formatTitle } from "../utils/formatTitle.js";
-import axios from "axios";
-
 
 export const createUserQuery = async (username: string, password: string) => {
     return await prisma.user.create({
@@ -45,6 +42,77 @@ export const getGenres = async () => {
     })
 }
 
+export const getUserMoviesByGenre = async (userId: string | undefined, slug: string, page: number) => {
+    const limit = 30;
+    const offset = (page - 1) * limit;
+
+    const movies = await prisma.movies.findMany({
+        where: {
+            userId: userId,
+            genres: {
+                some: {
+                    slug: slug
+                }
+            }
+        },
+        skip: offset,
+        take: limit,
+        include: {
+            movieImages: true
+        },
+        omit: {
+            userId: true,
+        }
+    })
+    const totalCount = await prisma.movies.count({
+        where: { userId: userId }
+    });
+
+    const genreName = await prisma.genres.findUnique({
+        where: {
+            slug: slug
+        },
+        select: {
+            name: true
+        }
+    })
+
+    return { movies, totalCount, genreName }
+}
+
+export const getMovieDetailsQuery = async (userId: string | undefined, slug: string) => {
+    const movieDetails = await prisma.movies.findUnique({
+        where: {
+            userId: userId,
+            slug: slug,
+        },
+        include: {
+            movieImages: true,
+            genres: true,
+            actors: true,
+            directors: true,
+        },
+        omit: {
+            userId: true,
+        }
+    })
+
+    return movieDetails
+}
+
+export const getUserWatchlistQuery = async (userId: string | undefined) => {
+    const watchlist = await prisma.movieWatchlist.findMany({
+        where: {
+            userId: userId
+        },
+        include: {
+            movies: true
+        }
+    })
+
+    return watchlist
+}
+
 export const createMovieQuery = async (
     userId: string | undefined,
     title: string,
@@ -74,6 +142,77 @@ export const createMovieQuery = async (
             },
             genres: {
                 connect: genres.map((genreId) => ({ id: genreId }))
+            },
+            actors: {
+                connectOrCreate: actors.map((actorName) => ({
+                    where: { actorName: actorName },
+                    create: {  actorName: actorName},
+                }))
+            },
+            directors: {
+                connectOrCreate: directors.map((director) => ({
+                    where: { directorName: director},
+                    create: { directorName: director }
+                }))
+            }
+        }
+    })
+}
+
+export const deleteMovieQuery = async (userId: string | undefined, slug: string) => {
+    const movie = await prisma.movies.findFirst({
+        where: {
+            userId: userId,
+            slug: slug
+        }
+    })
+
+    if (!movie) {
+        throw new Error("Movie not found or you do not have permission to delete it");
+    }
+
+    await prisma.movies.delete({
+        where: {
+            id: movie.id
+        }
+    })
+}
+
+export const editMovieQuery = async (
+    userId: string | undefined,
+    movieId: string,
+    title: string,
+    release_date: string,
+    rating: number,
+    description: string,
+    duration: number,
+    genres: string[],
+    actors: string[],
+    directors: string[],
+) => {
+    const movie = await prisma.movies.findUnique({
+        where: {
+            userId: userId,
+            id: movieId
+        }
+    })
+
+    if (!movie) {
+        throw new Error("Movie not found or you do not have permission to edit it");
+    }
+
+    await prisma.movies.update({
+        where: {
+            id: movie.id
+        },
+        data: {
+            title: title,
+            releaseDate: new Date(release_date),
+            rating: rating,
+            description: description,
+            duration: duration,
+            genres: {
+                set: genres.map((genreId) => ({ id: genreId }))
             },
             actors: {
                 connectOrCreate: actors.map((actorName) => ({
