@@ -1,4 +1,4 @@
-import { MoviesPaginated, Genres, GenreMovies, MovieFormState, MovieDetails, WatchlistMovieDetails } from "../types"
+import { MoviesPaginated, Genres, GenreMovies, MovieFormState, MovieDetails, Watchlist } from "../types"
 import axiosInstance from "@/utils/axiosInstance";
 
 export const getAllMovies = async (page: string): Promise<MoviesPaginated> => {
@@ -60,12 +60,12 @@ export const putUpdateMovie = async (movieData: MovieFormState, movieId: string 
     return response.data
 }
 
-export const getWatchlist = async (): Promise<WatchlistMovieDetails[]> => {
+export const getWatchlist = async (): Promise<Watchlist> => {
     const response = await axiosInstance.get('/watchlist');
     return response.data
 }
 
-export const postAddToWatchlist = async (movieId: number) => {
+export const postAddToWatchlist = async (movieId: string) => {
     if (!movieId) {
         throw new Error('Movie ID is required')
     }
@@ -79,7 +79,7 @@ export const postAddToWatchlist = async (movieId: number) => {
     return response.data
 }
 
-export const removeFromWatchlist = async (movieId: number) => {
+export const removeFromWatchlist = async (movieId: string) => {
     const response = await axiosInstance.delete(`/watchlist/${movieId}`)
     return response.data
 }
