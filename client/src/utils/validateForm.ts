@@ -10,12 +10,12 @@ export const validateForm = (state: MovieFormState): string[] => {
     if (!state.duration || !Number.isInteger(state.duration)){
         errors.push('Duration must be a valid number in minutes.');
     }
-    if (state.rating > 10 || state.rating < 0 ) {
+    if (parseInt(state.rating) > 10 || parseInt(state.rating) < 0 ) {
         errors.push('Rating must be a number between 0 and 10.');
     }
-    if (!state.release_date.trim()) {
+    if (!state.releaseDate.trim()) {
         errors.push("Release date is required.")
-    } else if (!dateRegex.test(state.release_date)) {
+    } else if (!dateRegex.test(state.releaseDate)) {
         errors.push("Release date must be in this format 'YYYY-MM-DD'.");
     }
 
