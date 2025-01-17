@@ -4,7 +4,7 @@ export interface MovieImages {
 }
 
 export interface Movies {
-    id: number,
+    id: string,
     title: string,
     releaseDate: string,
     rating: string,
@@ -20,21 +20,55 @@ export interface MoviesPaginated {
 export interface Genres {
     id: string,
     name: string,
+    slug: string
 }
+
+export interface Actors {
+    id: string,
+    actorName: string
+} 
+
+export interface Directors {
+    id: string,
+    directorName: string
+} 
 
 export interface GenreMovies {
     totalPages: number,
-    genre: string,
+    genre: Genres
     movies: Movies[]
 }
 
+export interface MovieDetails extends Movies {
+    description: string,
+    duration: number,
+    genres: Genres[],
+    actors: Actors[],
+    directors: Directors[]
+}
+ 
+
+export interface WatchlistMovieDetails {
+    id: string,
+    title: string,
+    description: string,
+    rating: string,
+    duration: number,
+    release_date: string,
+    slug: string,
+    poster_url: string
+}
+
+export interface Watchlist {
+    watchlist: WatchlistMovieDetails[]
+}
 
 export interface MovieFormState {
     title: string,
-    release_date: string,
+    releaseDate: string,
     description: string,
     duration: number,
-    rating: number,
+    rating: string,
     genres: string[],
     actors: string[],
     directors: string[],
@@ -47,27 +81,12 @@ export type MovieFormAction =
     | { type: 'SET_ACTORS', actors: string[] }
     | { type: 'RESET' }
 
-export interface MovieDetails extends Omit<MovieFormState, 'genres'> {
-    id: number,
-    poster_url: string,
-    genres: {genreId: number, genreName: string, genreSlug: string}[]
-}
- 
+
 export interface MutationFnArgs {
     movieData: MovieFormState,
     movieId?: string
 }
 
-export interface WatchlistMovieDetails {
-    id: number,
-    title: string,
-    description: string,
-    rating: number,
-    duration: number,
-    release_date: string,
-    slug: string,
-    poster_url: string
-}
 
 export interface AuthData {
     username: string,
