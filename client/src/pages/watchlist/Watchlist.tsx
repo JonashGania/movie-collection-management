@@ -27,10 +27,10 @@ const Watchlist = () => {
                                 <li key={movie.id} className="flex flex-col w-full py-4 border-b last:border-b-0 border-zinc-gray-300">
                                     <div className="flex w-full items-center">
                                         <div className="w-20 mr-4">
-                                            {movie.poster_url !== 'N/A' ? (
+                                            {movie.posterUrl !== 'N/A' ? (
                                                 <img 
                                                     className="w-full max-h-[100px] min-w-[75px] object-cover rounded-md" 
-                                                    src={movie.poster_url} 
+                                                    src={movie.posterUrl} 
                                                     alt={`${movie.title} Poster`} 
                                                 />
                                             ) : (
@@ -47,7 +47,7 @@ const Watchlist = () => {
                                                 <Link to={`/movies/${movie.slug}`} className="text-black  font-medium hover:text-gray-600">{movie.title}</Link>
                                             </div>
                                             <div className="flex gap-4">
-                                                <span className="text-zinc-500">{formatYear(movie.release_date)}</span>
+                                                <span className="text-zinc-500">{formatYear(movie.releaseDate)}</span>
                                                 <span className="text-zinc-500">{movie.duration}m</span>
                                             </div>
                                             <div className="flex items-center gap-1">

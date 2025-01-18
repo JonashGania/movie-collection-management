@@ -27,7 +27,6 @@ const MovieDetailsPage = () => {
         meta: { navigate }
     })
     
-
     const movieData = data ? {
             ...data,
             releaseDate: formatDate(data.releaseDate),

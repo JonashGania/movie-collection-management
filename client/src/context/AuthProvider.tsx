@@ -6,7 +6,9 @@ interface AuthContextProps {
     isAuthenticated: boolean;
     signIn: (signInData: AuthData) => Promise<void>;
     signUp: (signUpData: AuthData) => Promise<void>;
-    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    signOut: () => Promise<void>;
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+    isLoading: boolean
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -23,16 +25,20 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
                 const response = await axiosInstance.get('/check-auth', { withCredentials: true });
+
                 setIsAuthenticated(response.data.isAuthenticated)
             } catch (error) {
                 console.error('Error fetching authentication status', error);
                 setIsAuthenticated(false)
-            } 
+            } finally {
+                setIsLoading(false);
+            }
         }
 
         checkAuth();
@@ -45,10 +51,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     'Content-Type': 'application/json',
                 }
             })
-
-            setIsAuthenticated(true);
+           
+            setIsAuthenticated(response.data.isAuthenticated);
         } catch (error: any) {
             setIsAuthenticated(false);
+            throw error.response.data.message
+           
+        }
+    }
+
+    const signOut = async () => {
+        try {
+            const response = await axiosInstance.post('/log-out', {}, {withCredentials: true})
+            window.location.href = ('/sign-in')
+            setIsAuthenticated(response.data.isAuthenticated)
+        } catch (error: any) {
+            setIsAuthenticated(true);
             throw error.response.data.message
         }
     }
@@ -66,7 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signUp, signIn, setIsAuthenticated }}>
+        <AuthContext.Provider value={{ isAuthenticated, signUp, signIn, signOut, setIsAuthenticated, isLoading }}>
             {children}
         </AuthContext.Provider>
     )

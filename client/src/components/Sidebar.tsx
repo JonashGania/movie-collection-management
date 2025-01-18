@@ -1,13 +1,17 @@
-import { X, TvMinimalPlay } from "lucide-react"
-import { Link, NavLink } from "react-router-dom"
+import { X } from "lucide-react"
+import { Button } from "./ui/button"
+import { NavLink } from "react-router-dom"
+import { useAuth } from "@/context/AuthProvider"
 
 interface Sidebar {
-    menuItem: {name: string, link: string}[],
+    menuItem: {name: string, link: string, icon: JSX.Element}[],
     isOpen: boolean,
     handleSidebarToggle: () => void
 }
 
 const Sidebar = ({ menuItem, isOpen, handleSidebarToggle }: Sidebar) => {
+    const { signOut } = useAuth();
+
     return (
         <>
             <div className={`overlay fixed top-0 left-0 w-full h-screen bg-[rgba(0,0,0,0.4)] duration-300 ease-linear z-30 ${isOpen ? 'openMenu' : 'opacity-0 invisible'}`}>
@@ -36,10 +40,7 @@ const Sidebar = ({ menuItem, isOpen, handleSidebarToggle }: Sidebar) => {
                                 >
                                     {({ isActive }) => (
                                         <>
-                                            <img 
-                                                src={`/${item.name}.svg`} 
-                                                alt="icon" 
-                                            />
+                                            {item.icon}
                                             <span 
                                                 className={`text-lg font-medium ${isActive ? 'text-white' : 'text-zinc-400 group-hover:text-white'} `}
                                             >
@@ -51,14 +52,12 @@ const Sidebar = ({ menuItem, isOpen, handleSidebarToggle }: Sidebar) => {
                             </li>
                         ))}
                     </ul>
-                    <Link 
-                        onClick={handleSidebarToggle}
-                        to={'/watchlist'} 
-                        className="flex items-center gap-2 pt-2 px-2 group"
+                    <Button 
+                        onClick={signOut}
+                        className="text-white bg-cyan-500 w-full mt-4 rounded-2xl hover:bg-cyan-500"
                     >
-                        <TvMinimalPlay className="h-6 w-6" color="#ffffff"/>
-                        <span className="text-zinc-400 font-semibold group-hover:text-white">Watchlist</span>
-                    </Link>
+                        Sign Out
+                    </Button>
                 </div>
             </div>
         </>

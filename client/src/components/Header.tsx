@@ -1,24 +1,30 @@
 import { NavLink, Link } from "react-router-dom"
-import { Menu, TvMinimalPlay } from "lucide-react";
-import Sidebar from "./Sidebar";
+import { Menu, TvMinimalPlay, Film, Clapperboard } from "lucide-react";
 import { useState } from "react";
+import { Button } from "./ui/button";
+import { useAuth } from "@/context/AuthProvider";
+import Sidebar from "./Sidebar";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { signOut } = useAuth();
 
     const links = [
         {
-            name: 'Home',
-            link: '/'
-        },
-        {
             name: 'Movies',
-            link: '/movies'
+            link: '/',
+            icon: <Clapperboard color="#ffffff"/>
         },
         {
             name: 'Genres',
-            link: '/genres'
+            link: '/genres',
+            icon: <Film color="#ffffff"/>
         },
+        {
+            name: 'Watchlist',
+            link: '/watchlist',
+            icon: <TvMinimalPlay color="#ffffff"/>
+        }
     ];
 
     const handleSidebarToggle = () => {
@@ -31,25 +37,30 @@ const Header = () => {
                 <Link to={'/'}>
                     <img src="/logo.svg" alt="logo" className="h-[50px] w-[50px] sm:w-full sm:h-full"/>
                 </Link>
-                <div className="hidden sm:flex items-center ">
-                    <ul className="flex items-center gap-8 text-zinc-200 text-lg font-medium pr-3">
-                        {links.map((item, index) => (
-                            <NavLink 
-                                to={item.link} 
-                                key={index} 
-                                className="text-white font-light text-lg"
-                            >
-                                {item.name}
-                            </NavLink>
-                        ))}
-                    </ul>
-                    <div className="pl-3 border-l-2 border-zinc-600">
-                        <Link to={'/watchlist'} className="flex items-center gap-2">
-                            <TvMinimalPlay className="h-5 w-5" color="#ffffff"/>
-                           <span className="text-gray-200 font-semibold">Watchlist</span>
-                        </Link>
+                <div className="hidden sm:flex items-center gap-8">
+                    <div className="flex items-center ">
+                        <ul className="flex items-center gap-6 text-zinc-200 text-lg font-medium pr-3">
+                            {links.map((item, index) => (
+                                <NavLink 
+                                    to={item.link} 
+                                    key={index} 
+                                    className="text-white font-light text-lg"
+                                >
+                                    {item.name}
+                                </NavLink>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <Button 
+                            onClick={signOut}
+                            className="bg-cyan-500 text-white hover:bg-cyan-500 rounded-2xl"
+                        >
+                            Sign Out
+                        </Button>
                     </div>
                 </div>
+
                 <div className="flex items-center sm:hidden gap-2">
                     <button onClick={handleSidebarToggle}>
                         <Menu className="h-7 w-7" color="#ffffff"/>
