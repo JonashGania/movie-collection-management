@@ -80,6 +80,10 @@ export const postAddToWatchlist = async (movieId: string) => {
 }
 
 export const removeFromWatchlist = async (movieId: string) => {
+    if (!movieId) {
+        throw new Error("Movie ID is required");
+    }
+    
     const response = await axiosInstance.delete(`/watchlist/${movieId}`)
     return response.data
 }
