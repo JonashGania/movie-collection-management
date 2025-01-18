@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { addMovieWatchlistQuery } from "../db/queries/postQueries.js";
-import { removeMovieWatchlistQuery } from "../db/queries/deleteQueries.js";
-import { getUserWatchlistQuery } from "../db/queries.js";
+import { getUserWatchlistQuery, addMovieWatchlistQuery, removeMovieWatchlistQuery } from "../db/queries.js";
 
 export const getAllWatchlist = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id
@@ -12,51 +10,61 @@ export const getAllWatchlist = async (req: Request, res: Response, next: NextFun
         if (!movies) {
             res.status(500).json({ 
                 status: 500, 
-                error: 'Failed to fetch the watchlist' 
+                message: 'Failed to fetch the watchlist' 
             });
             return
         }
 
-        res.status(200).json({ watchlist: movies });
+
+        res.status(200).json(movies);
     } catch (error) {
         console.error('Error in getAllWatchlist controller', error);
         res.status(500).json({ 
             status: 500, 
-            error: "An error occured while fetching watchlist" 
+            message: "An error occured while fetching watchlist" 
         });
     }
 }
 
 export const addToWatchlist = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.body
-    
+    const userId = req.user?.id
+
     try {
         if (!id) {
-            res.status(400).send({ error: 'Movie ID is required' });
+            res.status(400).json({ 
+                status: 400, 
+                message: 'Movie ID is required' 
+            });
             return
         }
         
-        await addMovieWatchlistQuery(id);
+        await addMovieWatchlistQuery(userId, id);
 
         res.status(201).send("Movie added to watchlist successfully");
     } catch (error) {
         console.error('Error adding movie to watchlist', error);
-        res.status(500).json({ error: "An error occured while adding movie to watchlist" })
+        res.status(500).json({ 
+            status: 500,
+            message: "An error occured while adding movie to watchlist" 
+        })
     }
 }
 
 export const removeFromWatchlist = async (req: Request, res: Response, next: NextFunction) => {
     const id  = req.params.movieId
+    const userId = req.user?.id
 
     try {
-        const movieId = Number(id);
-
-        if (isNaN(movieId)) {
-            res.status(400).json({ error: 'Invalid Movie ID' })
+        if (!id) {
+            res.status(400).json({ 
+                status: 400, 
+                message: 'Movie ID is required' 
+            });
             return
         }
 
-        await removeMovieWatchlistQuery(movieId)
+        await removeMovieWatchlistQuery(userId, id)
 
         res.status(200).send('Movie removed from watchlist successfully');
     } catch (error) {
