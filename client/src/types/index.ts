@@ -54,9 +54,9 @@ export interface WatchlistMovieDetails {
     description: string,
     rating: string,
     duration: number,
-    release_date: string,
+    releaseDate: string,
     slug: string,
-    poster_url: string
+    posterUrl: string
 }
 
 export interface Watchlist {
@@ -91,4 +91,10 @@ export interface MutationFnArgs {
 export interface AuthData {
     username: string,
     password: string
+}
+
+export interface User {
+    id: string,
+    username: string,
+    password: string,
 }
