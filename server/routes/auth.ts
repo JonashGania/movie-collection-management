@@ -1,8 +1,9 @@
 import express from 'express'
 import passport from "passport";
+import { Request, Response, NextFunction } from "express";
 import { createUser } from '../controllers/authController.js';
 import { User } from '../types/index.js';
-import { checkAuthentication } from '../middlewares/authMiddleware.js';
+import { checkAuthentication, isAuthenticated } from '../middlewares/authMiddleware.js';
 
 const authRouter = express.Router();
 
@@ -26,13 +27,27 @@ authRouter.post('/login', (req, res, next) => {
                 return next(err);
             }
 
-            console.log(req.user);
-
-            return res.json({ message: "Login successful" });
+            return res.json({ 
+                message: "Login successful", 
+                isAuthenticated: true,
+            });
         })
     })(req, res, next);
 })
 
-authRouter.get('/check-auth', checkAuthentication)
+authRouter.post('/log-out', isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err)
+        }
+
+        return res.json({ 
+            message: "Logout successful", 
+            isAuthenticated: false,
+        });
+    })
+})
+
+authRouter.get('/check-auth', isAuthenticated, checkAuthentication)
 
 export default authRouter
