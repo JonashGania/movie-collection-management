@@ -106,11 +106,28 @@ export const getUserWatchlistQuery = async (userId: string | undefined) => {
             userId: userId
         },
         include: {
-            movies: true
+            movies: {
+                include: {
+                    movieImages: true
+                }
+            }
+        },
+        omit: {
+            userId: true,
+            movieId: true
         }
     })
+    const formattedWatchlist = watchlist.map(item => {
+        const { userId, ...movieDetails } = item.movies;
+        return {...movieDetails, posterUrl: item.movies.movieImages?.posterUrl};
+    })
 
-    return watchlist
+    const allMovies = formattedWatchlist.map(item => {
+        const { movieImages, ...movieDetails } = item;
+        return movieDetails
+    })
+
+    return { watchlist: allMovies }
 }
 
 export const createMovieQuery = async (
@@ -225,6 +242,60 @@ export const editMovieQuery = async (
                     where: { directorName: director},
                     create: { directorName: director }
                 }))
+            }
+        }
+    })
+}
+
+export const addMovieWatchlistQuery = async (userId: string | undefined, movieId: string) => {
+    if (!userId) {
+        throw new Error("User Id is required.");
+    }
+
+    const existingEntry = await prisma.movieWatchlist.findUnique({
+        where: {
+            userId_movieId: {
+                userId: userId,
+                movieId: movieId
+            }
+        }
+    })
+
+    if (existingEntry) {
+        throw new Error("Movie is already in the watchlist")
+    }
+    
+    await prisma.movieWatchlist.create({
+        data: {
+            movieId: movieId,
+            userId: userId,
+        }
+    })
+}
+
+export const removeMovieWatchlistQuery = async(userId: string | undefined, movieId: string) => {
+    if (!userId) {
+        throw new Error("User Id is required.");
+    }
+
+    const existingEntry = await prisma.movieWatchlist.findUnique({
+        where: {
+            userId_movieId: {
+                userId: userId,
+                movieId: movieId
+            }
+        }
+    })
+
+    if (!existingEntry) {
+        throw new Error("Movie is not in the watchlist")
+    }
+    
+    await prisma.movieWatchlist.delete({
+        where: {
+            userId_movieId: {
+                userId: userId,
+                movieId: movieId
             }
         }
     })
