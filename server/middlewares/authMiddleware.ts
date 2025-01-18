@@ -14,7 +14,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 
 export const checkAuthentication = (req: Request, res: Response, next: NextFunction) => {
     if (req.isAuthenticated()) {
-        res.json({ isAuthenticated: true })
+        res.json({ isAuthenticated: true });
     } else {
         res.json({ isAuthenticated: false });
     }
