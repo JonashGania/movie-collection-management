@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import HomePage from "./pages/home/HomePage";
-import MoviesPage from "./pages/movies/MoviesPage"
 import GenresPage from "./pages/genres/GenresPage"
 import GenreMoviesPage from "./pages/moviesByGenres/GenreMoviesPage"
 import MovieDetailsPage from "./pages/movieDetails/MovieDetailsPage"
@@ -23,7 +22,6 @@ const App = () => {
                     <Route element={<Root />}>
                         <Route element={<ProtectedRoutes />}>
                             <Route path="/" element={<HomePage />}/>
-                            <Route path="/movies" element={<MoviesPage />}/>
                             <Route path="/genres" element={<GenresPage />} />
                             <Route path="/genres/:genreId" element={<GenreMoviesPage />} />
                             <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
@@ -31,7 +29,7 @@ const App = () => {
                         </Route>
                     </Route>
                     <Route path="/error" element={<ErrorPage />} />
-                    {/* <Route path="*" element={<ErrorPage />} /> */}
+                    <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
