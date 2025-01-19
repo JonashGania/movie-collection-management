@@ -21,7 +21,6 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         } else {
             addMovieToWatchlist(movie.id)
         }
-        console.log(movie.id)
     }
 
     return (
