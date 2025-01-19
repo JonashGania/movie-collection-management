@@ -14,7 +14,7 @@ const DeleteMovieModal = ({ movieId }: { movieId: string | undefined}) => {
         mutationFn: deleteMovie,
         onSuccess: () => {
             toast({
-                variant: 'default',
+                variant: 'success',
                 title: 'Successful!',
                 description: 'Movie was successfully deleted.'
             })
