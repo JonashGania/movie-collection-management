@@ -32,7 +32,7 @@ const GenresForm = ({ selectedGenres, handleSetGenres }: GenresFormProps) => {
                     <li 
                         key={genre.id}
                         onClick={() => handleGenreSelect(genre.id)} 
-                        className={`py-1 px-4 rounded-xl text-black font-medium text-sm cursor-pointer ${
+                        className={`py-1 px-4 rounded-xl text-black font-medium text-xs sm:text-sm cursor-pointer ${
                                 selectedGenres.includes(genre.id) ? 'bg-cyan-700' : 'bg-zinc-300 hover:bg-zinc-200'
                             }`}
                     >
