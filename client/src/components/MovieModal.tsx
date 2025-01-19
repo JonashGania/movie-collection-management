@@ -41,7 +41,7 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
             }
 
             toast({
-                variant: 'default',
+                variant: 'success',
                 title: initialData ? 'Movie Updated' : 'Movie Created',
                 description: `The movie was successfully ${initialData ? 'updated!' : 'added!'}!`
             })
@@ -51,7 +51,7 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
         },
         onError: (error: Error) => {
             toast({
-                variant: 'destructive',
+                variant: "destructive",
                 title: 'Submission Failed',
                 description: error.message
             })
@@ -87,19 +87,18 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
 
             return
         }
-        console.log(state);
         mutation({ movieData: state, movieId: movieId })
     }
     
 
     return (
-        <DialogContent className="modal-container w-full h-[600px] flex flex-col">
+        <DialogContent className="modal-container w-full h-[600px] flex flex-col rounded-xl">
             <DialogHeader>
-                <DialogTitle className="text-xl">{initialData ? 'Update Movie' : 'Add New Movie'}</DialogTitle>
+                <DialogTitle className="text-xl text-start">{initialData ? 'Update Movie' : 'Add New Movie'}</DialogTitle>
             </DialogHeader>
 
             <Tabs className="h-full">
-                <TabsList className="bg-zinc-300 w-full flex">
+                <TabsList className="bg-zinc-300 w-full flex mb-2 sm:mb-4">
                     <TabsTrigger value="details" className="tabs-trigger px-8 w-full">Details</TabsTrigger>
                     <TabsTrigger value="genres" className="tabs-trigger px-8 w-full">Genres</TabsTrigger>
                     <TabsTrigger value="directors" className="tabs-trigger px-8 w-full">Directors</TabsTrigger>
@@ -108,9 +107,9 @@ const MovieModal = ({ initialData, movieId }: MovieModalProps) => {
 
                 <form 
                     onSubmit={handleFormSubmit} 
-                    className="flex flex-col justify-between h-[480px]" 
+                    className="flex flex-col justify-between h-[480px] sm:h-[460px]" 
                 >
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto modal-scroll">
                         <TabsContent value="details">
                             <MovieDetailsForm 
                                 detailValues={state} 
