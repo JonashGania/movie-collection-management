@@ -72,6 +72,10 @@
   @apply text-cyan-300 font-medium
 }
 
+.modal-scroll::-webkit-scrollbar{
+  display: none;
+}
+
 
 .movie-wrapper, .skeleton-movies-wrapper{
   display: grid;
