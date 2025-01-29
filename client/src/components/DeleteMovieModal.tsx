@@ -21,7 +21,7 @@ const DeleteMovieModal = ({ movieId }: { movieId: string | undefined}) => {
 
             queryClient.invalidateQueries({ queryKey: ['movies'] });
 
-            navigate("/movies");
+            navigate("/");
         },
         onError: (error: Error) => {
             toast({
